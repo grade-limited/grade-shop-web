@@ -1,8 +1,17 @@
 import Iconify from "@/components/iconify";
+import { useGetSearchCategory } from "@/queries/category";
 import { Menu, MenuProps } from "antd";
 import React from "react";
+import Image from "next/image";
+import { previewImage } from "@/service";
 
 type MenuItem = Required<MenuProps>["items"][number];
+type CategoryItem = {
+	id: number;
+	name: string;
+	icon_url?: string;
+	children: CategoryItem[];
+};
 
 function getItem(
 	label: React.ReactNode,
@@ -18,52 +27,33 @@ function getItem(
 	} as MenuItem;
 }
 
-const items: MenuItem[] = [
-	getItem("Navigation One", "1", <Iconify icon={"lucide:user"} />, [
-		getItem("Option 7", "7"),
-		getItem("Option 8", "8"),
-		getItem("Option 9", "9"),
-		getItem("Option 10", "10"),
-	]),
-	getItem("Navigation Two", "2", <Iconify icon={"lucide:user"} />, [
-		getItem("Option 7", "7"),
-		getItem("Option 8", "8"),
-		getItem("Option 9", "9"),
-		getItem("Option 10", "10"),
-	]),
-	getItem("Navigation Two", "sub1", <Iconify icon={"lucide:user"} />, [
-		getItem("Option 3", "3"),
-		getItem("Option 4", "4"),
-		getItem("Submenu", "sub1-2", null, [
-			getItem("Option 5", "5"),
-			getItem("Option 6", "6"),
-		]),
-	]),
-	getItem("Navigation Three", "sub2", <Iconify icon={"lucide:user"} />, [
-		getItem("Option 7", "7"),
-		getItem("Option 8", "8"),
-		getItem("Option 9", "9"),
-		getItem("Option 10", "10", null, [
-			getItem("Option 7", "7"),
-			getItem("Option 8", "8"),
-			getItem("Option 9", "9"),
-			getItem("Option 10", "10"),
-		]),
-	]),
+const generateItem = ({
+	id,
+	name,
+	icon_url,
+	children,
+}: CategoryItem): MenuItem =>
 	getItem(
-		<a
-			href="https://ant.design"
-			target="_blank"
-			rel="noopener noreferrer"
-		>
-			Ant Design
-		</a>,
-		"link",
-		<Iconify icon={"lucide:user"} />
-	),
-];
+		name,
+		id,
+		icon_url ? (
+			<Image
+				src={previewImage(icon_url)}
+				height={80}
+				width={80}
+				className="h-8 w-8"
+				alt={name}
+			/>
+		) : null,
+		!!children?.length
+			? Array.from(children, (item) => generateItem(item))
+			: undefined
+	);
 
 const Sidebar: React.FC = () => {
+	const { data } = useGetSearchCategory();
+	console.log(data);
+
 	return (
 		<aside className="w-72 h-[calc(100vh-72px)] md:h-[calc(100vh-96px)] bg-white relative overflow-y-auto">
 			<Menu
@@ -72,7 +62,9 @@ const Sidebar: React.FC = () => {
 				mode={"inline"}
 				inlineCollapsed={false}
 				theme={"light"}
-				items={items}
+				items={Array.from(data ?? [], (item: CategoryItem) =>
+					generateItem(item)
+				)}
 			/>
 		</aside>
 	);

@@ -5,7 +5,7 @@ import { authService } from "./auth";
 import crypto from "@/utilities/crypto";
 
 // Configuring root url
-export const rootURL: string | undefined = config.proxyApiURL;
+export const rootURL: string | undefined = config.apiURL;
 
 // configuring axios on initial load with the authorization token from localstorage it exists
 export const instance = axios.create({
@@ -27,5 +27,9 @@ instance.interceptors.request.use((configuration) => {
 
 	return configuration;
 });
+
+export const previewImage = (fileName: string) => {
+	return `${rootURL}/files/${fileName}`;
+};
 
 export default instance;
