@@ -1,0 +1,39 @@
+{
+	"META": {
+		"TITLE": "Grade Employee Mart | Grade Ltd. | Grade E-Mart",
+		"DESCRIPTION": "Grade Ltd. is your tech-enabled solution to rising prices and superfluous middlemen. By eliminating distributors and dealers, we bring you quality products at pocket-friendly prices, ensuring end-to-end digitalization. Whether you`re a B2B partner or part of our employee network, experience transparent pricing in our tech-driven platform."
+	},
+	"HEADER": {
+		"SIGN": "Sign in",
+		"CHANGE_LANGUAGE": "Change Language",
+		"SEARCH": "Search",
+		"CONTACT_NUMBER": "+09610960003",
+		"CONTACT_SUBTITLE": "Support 24/7"
+	},
+
+	"SEE_MORE": "See More",
+	"READ_MORE": "Read More",
+	"FOOTER": {
+		"COMPANY_NAME": "Grade E-Mart",
+		"DESCRIPTION": "The most popular and reliable website for making restaurant reservations in Bangladesh. A user-friendly app that makes dining out easier. Select, Click, Reserve, and enjoy hassle-free dining experiences.",
+		"REGISTERED_ADDRESS": "Registered Address",
+		"COMPANY": "COMPANY",
+		"ADDRESS": "Address",
+		"FOLLOWUSONSOCIALMEDIA": "Follow Us On Social Media",
+		"ABOUT": "About",
+		"BLOG": "Blog",
+		"CAREER": "Career",
+		"REFUND": "Refund",
+		"CANCELLATION_POLICY": "Cancellation policy",
+		"CONTACT": "CONTACT",
+		"CONTACT_EMAIL": "support@reserveitbd.com",
+		"CONTACT_NUMBER": "09610960009",
+		"CONTACT_NUMBER_2": "01329638226",
+		"DOWNLOAD_TEXT": "DOWNLOAD OUR APP",
+		"PRIVACY_POLICY": "Privacy Policy",
+		"TERMS_OF_USE": "Terms of Use",
+		"COOKIES_AND_INTEREST": "Cookies and Interest - Based Ads",
+		"DO_NOT_SELL_TEXT": "Do not Sell My Info (Bangladesh)",
+		"RIGHTS_TEXT": "Grade Ltd - All Rights Reserved."
+	}
+}

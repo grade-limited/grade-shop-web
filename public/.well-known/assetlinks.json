@@ -1,0 +1,11 @@
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.reserveit.user",
+      "sha256_cert_fingerprints":
+        ["CE:49:42:A9:66:78:C2:DA:16:FE:EC:8D:36:0B:81:C3:8B:B7:E6:EF:82:3A:3F:7D:7B:B5:40:19:45:29:6F:B4"]
+    }
+  }
+]
