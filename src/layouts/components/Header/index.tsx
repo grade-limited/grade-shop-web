@@ -117,7 +117,7 @@ const Header: React.FC = () => {
 					</div>
 
 					<Link
-						href={"/"}
+						href={"#"}
 						className="hidden md:flex flex-col items-end justify-center"
 					>
 						<span className="text-sm font-semibold">
