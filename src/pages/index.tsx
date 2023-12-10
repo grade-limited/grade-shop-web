@@ -20,6 +20,7 @@ export default function Home({ data }: { data: any }) {
 		initialData: data?.categories,
 		params: {
 			only_parent: true,
+			limit: 1000,
 		},
 	});
 
@@ -38,7 +39,9 @@ export default function Home({ data }: { data: any }) {
 			</Head>
 			<main>
 				<Banner banners={CampaignData?.data || []} />
-				<Category categories={CategoryData?.data || []} />
+				<div className="p-4">
+					<Category categories={CategoryData?.data || []} />
+				</div>
 			</main>
 		</>
 	);
@@ -49,6 +52,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 		const campaigns = await getCampaigns();
 		const categories = await getCategory({
 			only_parent: true,
+			limit: 1000,
 		});
 		return {
 			props: {

@@ -5,7 +5,7 @@ import React from "react";
 
 const Category: React.FC<{ categories?: any[] }> = ({ categories }) => {
 	return (
-		<div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2 p-4 relative">
+		<div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2 relative">
 			{categories?.map((category, index) => {
 				return (
 					<Link

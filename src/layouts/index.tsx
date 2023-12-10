@@ -59,7 +59,7 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
 					<Sidebar />
 				</div>
 				<section className="flex-1 relative h-[calc(100vh-72px)] md:h-[calc(100vh-96px)] overflow-y-auto">
-					<Container className="min-h-[60vh] overflow-x-hidden relative pt-2 pb-6 overflow-y-auto max-w-none px-0">
+					<Container className="min-h-[60vh] overflow-x-hidden relative pt-2 pb-6 overflow-y-auto max-w-[1620px] px-0">
 						{children}
 					</Container>
 					<Footer />
