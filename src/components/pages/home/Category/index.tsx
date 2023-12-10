@@ -12,16 +12,25 @@ const Category: React.FC<{ categories?: any[] }> = ({ categories }) => {
 						key={index}
 						href={`/category/${category.id}`}
 						className={`h-40 p-4 rounded-md relative ${
-							category.color_code ? category.color_code : "bg-slate-200"
+							category.color_code ? `` : "bg-slate-200"
 						}`}
+						style={{
+							...(category.color_code
+								? {
+										backgroundColor: category.color_code,
+								  }
+								: {}),
+						}}
 					>
-						<Image
-							src={previewImage(category.thumbnail_url)}
-							height={120}
-							width={120}
-							className="absolute bottom-0 right-0 h-full w-auto"
-							alt={category.name}
-						/>
+						{category.thumbnail_url && (
+							<Image
+								src={previewImage(category.thumbnail_url)}
+								height={120}
+								width={120}
+								className="absolute bottom-0 right-0 h-full w-auto"
+								alt={category.name}
+							/>
+						)}
 						<span className="font-bold relative pl-2">{category.name}</span>
 					</Link>
 				);
