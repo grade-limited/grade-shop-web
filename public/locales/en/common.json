@@ -6,8 +6,8 @@
 	"HEADER": {
 		"SIGN": "Sign in",
 		"CHANGE_LANGUAGE": "Change Language",
-		"SEARCH": "Search",
-		"CONTACT_NUMBER": "+09610960003",
+		"SEARCH": "Search Product, Category, Brand..",
+		"CONTACT_NUMBER": "+8801842024378",
 		"CONTACT_SUBTITLE": "Support 24/7"
 	},
 
@@ -32,11 +32,13 @@
 		"BLOG": "Blog",
 		"CAREER": "Career",
 		"REFUND": "Refund",
+		"NEWSLETTER": "Newsletter",
+		"NEWSLETTER_DESCRIPTION": "Subscribe to our newsletter to get updates on our latest offers!",
+		"NEWSLETTER_PLACEHOLDER": "eg: example@email.com",
 		"CANCELLATION_POLICY": "Cancellation policy",
 		"CONTACT": "CONTACT",
-		"CONTACT_EMAIL": "support@reserveitbd.com",
-		"CONTACT_NUMBER": "09610960009",
-		"CONTACT_NUMBER_2": "01329638226",
+		"CONTACT_EMAIL": "sales@gradebd.com",
+		"CONTACT_NUMBER": "+8801842024378",
 		"DOWNLOAD_TEXT": "DOWNLOAD OUR APP",
 		"PRIVACY_POLICY": "Privacy Policy",
 		"TERMS_OF_USE": "Terms of Use",

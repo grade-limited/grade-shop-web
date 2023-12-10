@@ -9,7 +9,7 @@ import {
 	IconButton,
 	Typography,
 } from "@mui/material";
-import { Badge } from "antd";
+import { Badge, Input } from "antd";
 import moment from "moment";
 import Link from "next/link";
 import React from "react";
@@ -79,50 +79,15 @@ const Footer: React.FC = () => {
 						</Typography>
 
 						<div className="mt-3 flex flex-col gap-2">
-							<Link href={"/about"}>
-								<Typography
-									variant="caption"
-									// className="font-semibold"
-								>
-									{t("FOOTER.ABOUT")}
-								</Typography>
-							</Link>
-							<Link href={"/blog"}>
-								<Typography
-									variant="caption"
-									// className="font-semibold"
-								>
-									{t("FOOTER.BLOG")}
-								</Typography>
-							</Link>
-							<Link href={"/career"}>
-								<Typography
-									variant="caption"
-									// className="font-semibold"
-								>
-									{t("FOOTER.CAREER")}
-								</Typography>
-							</Link>
 							<Link
-								href="#"
-								className="hidden"
+								href={"https://www.gradebd.com/about/"}
+								target="_blank"
 							>
 								<Typography
 									variant="caption"
 									// className="font-semibold"
 								>
-									{t("FOOTER.REFUND")}
-								</Typography>
-							</Link>
-							<Link href="/refund">
-								<Typography variant="caption">{t("FOOTER.REFUND")}</Typography>
-							</Link>
-							<Link href="/cancellation">
-								<Typography
-									variant="caption"
-									sx={{ whiteSpace: "nowrap" }}
-								>
-									{t("FOOTER.CANCELLATION_POLICY")}
+									{t("FOOTER.ABOUT")}
 								</Typography>
 							</Link>
 						</div>
@@ -142,7 +107,7 @@ const Footer: React.FC = () => {
 
 						<div className="mt-3 flex flex-col gap-2">
 							<Link
-								href={"mailto:support@reserveitbd.com"}
+								href={`mailto:${t("FOOTER.CONTACT_EMAIL")}`}
 								target="_blank"
 							>
 								<Typography variant="caption">
@@ -155,14 +120,6 @@ const Footer: React.FC = () => {
 							>
 								<Typography variant="caption">
 									{t("FOOTER.CONTACT_NUMBER")}
-								</Typography>
-							</Link>
-							<Link
-								href={`tel:${t("FOOTER.CONTACT_NUMBER_2")}`}
-								target="_blank"
-							>
-								<Typography variant="caption">
-									{t("FOOTER.CONTACT_NUMBER_2")}
 								</Typography>
 							</Link>
 						</div>
@@ -180,51 +137,82 @@ const Footer: React.FC = () => {
 							{t("FOOTER.DOWNLOAD_TEXT")}
 						</Typography>
 
-						<div className="mt-3 flex flex-row gap-2">
+						<div className="mt-3 flex flex-row gap-4">
 							<Button
-								component={"a"}
-								href="https://play.google.com/store/apps/details?id=com.reserveit.user"
-								target="_blank"
-								rel="noreferrer"
+								// component={"a"}
+								// href="https://play.google.com/store/apps/details?id=com.reserveit.user"
+								// target="_blank"
+								// rel="noreferrer"
 								color="primary"
 								className="p-0 min-w-[90px] max-w-[100px] flex-1"
 							>
-								<Avatar
-									variant="square"
-									src={"/assets/PlayStoreButton.svg"}
-									alt="get it on playstore"
-									// width="100%"
-									className="w-full h-auto"
-								/>
+								<Badge.Ribbon
+									text="Upcoming!"
+									color="red"
+									className="text-xs h-fit py-1 -top-2"
+								>
+									<Avatar
+										variant="square"
+										src={"/assets/PlayStoreButton.svg"}
+										alt="get it on playstore"
+										className="w-full h-auto"
+									/>
+								</Badge.Ribbon>
 							</Button>
 							<Button
-								component={"a"}
-								href="https://apps.apple.com/us/app/reserveit-bd/id6463799781"
-								target="_blank"
-								rel="noreferrer"
+								// component={"a"}
+								// href="https://apps.apple.com/us/app/reserveit-bd/id6463799781"
+								// target="_blank"
+								// rel="noreferrer"
 								color="primary"
 								className="p-0 min-w-[90px] max-w-[100px] flex-1"
 							>
-								{/* <Badge.Ribbon
-										text="New!"
-										color="red"
-										className="text-xs h-fit py-1 -top-2"
-									> */}
-								<Avatar
-									variant="square"
-									src={"/assets/AppStoreButton.svg"}
-									alt="get it on playstore"
-									// width="100%"
-									className="w-full h-auto"
-								/>
-								{/* </Badge.Ribbon> */}
+								<Badge.Ribbon
+									text="Upcoming!"
+									color="red"
+									className="text-xs h-fit py-1 -top-2"
+								>
+									<Avatar
+										variant="square"
+										src={"/assets/AppStoreButton.svg"}
+										alt="get it on playstore"
+										className="w-full h-auto"
+									/>
+								</Badge.Ribbon>
 							</Button>
 						</div>
+
+						<Typography
+							variant="subtitle2"
+							className="font-semibold uppercase mt-8"
+						>
+							{t("FOOTER.NEWSLETTER")}
+						</Typography>
+						<Typography
+							variant="body2"
+							className="my-2 md:max-w-xs"
+						>
+							{t("FOOTER.NEWSLETTER_DESCRIPTION")}
+						</Typography>
+						<Input
+							placeholder={t("FOOTER.NEWSLETTER_PLACEHOLDER")}
+							bordered={false}
+							className="bg-slate-600 max-w-xs mt-2 pl-3 pr-1 [&>input]:text-white [&>input]:placeholder-slate-400 placeholder-white text-white"
+							suffix={
+								<IconButton
+									color="primary"
+									className="bg-slate-800 rounded-md"
+								>
+									<Iconify icon="lets-icons:send-duotone" />
+								</IconButton>
+							}
+						/>
 					</Grid>
 				</Grid>
 				<div className="bg-slate-900 py-10 mt-10 flex flex-row items-center justify-between px-10">
 					<Typography variant="caption">
-						© {moment().format("yyyy")} {t("FOOTER.RIGHTS_TEXT")}
+						© {moment().format("yyyy") !== "2023" ? "2023 -" : ""}{" "}
+						{moment().format("yyyy")} {t("FOOTER.RIGHTS_TEXT")}
 					</Typography>
 					<div className="flex-1" />
 					<Typography
@@ -237,7 +225,7 @@ const Footer: React.FC = () => {
 					{/* social media icons */}
 					<div className="m-4 mr-0 flex flex-row gap-2 flex-wrap">
 						<Link
-							href={"https://www.facebook.com/Reserveitbd"}
+							href={"https://www.facebook.com/gradebangladesh"}
 							target="_blank"
 						>
 							<IconButton
@@ -250,7 +238,7 @@ const Footer: React.FC = () => {
 							</IconButton>
 						</Link>
 						<Link
-							href={"https://www.linkedin.com/company/reserveit-limited/"}
+							href={"https://www.linkedin.com/company/gradebd"}
 							target="_blank"
 						>
 							<IconButton
@@ -262,7 +250,7 @@ const Footer: React.FC = () => {
 								<Iconify icon={"eva:linkedin-fill"} />
 							</IconButton>
 						</Link>
-						<Link
+						{/* <Link
 							href={"https://www.instagram.com/reserveitbd/"}
 							target="_blank"
 						>
@@ -274,7 +262,7 @@ const Footer: React.FC = () => {
 							>
 								<Iconify icon={"uil:instagram-alt"} />
 							</IconButton>
-						</Link>
+						</Link> */}
 					</div>
 				</div>
 			</AppBar>

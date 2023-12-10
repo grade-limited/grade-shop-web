@@ -1,4 +1,3 @@
-import Iconify from "@/components/iconify";
 import { useGetSearchCategory } from "@/queries/category";
 import { Menu, MenuProps, Skeleton } from "antd";
 import React from "react";
@@ -41,7 +40,7 @@ const generateItem = ({
 				src={previewImage(icon_url)}
 				height={80}
 				width={80}
-				className="h-8 w-8"
+				className="h-6 w-6"
 				alt={name}
 			/>
 		) : null,
@@ -70,7 +69,7 @@ const Sidebar: React.FC = () => {
 					items={Array.from(data ?? [], (item: CategoryItem) =>
 						generateItem(item)
 					)}
-					className="[&>.ant-menu-submenu>.ant-menu-submenu-title]:pl-2"
+					className="[&>.ant-menu-submenu>.ant-menu-submenu-title]:pl-2 text-xs font-bold"
 				/>
 			)}
 		</aside>

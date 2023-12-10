@@ -108,17 +108,24 @@ const Header: React.FC = () => {
 					</div>
 					<div className="flex-1">
 						<Input
-							size="large"
 							bordered={false}
 							placeholder={t("HEADER.SEARCH")}
-							className="max-w-sm rounded-full bg-slate-600 px-4 text-white [&>input]:bg-slate-600 [&>input]:text-white [&>input]:placeholder-slate-400"
+							className="max-w-sm rounded-full bg-slate-600 px-4 text-white pr-1 pl-6 [&>input]:bg-slate-600 [&>input]:text-white [&>input]:placeholder-slate-400"
+							suffix={
+								<IconButton
+									color="primary"
+									className="bg-slate-800"
+								>
+									<Iconify icon="lets-icons:search-duotone" />
+								</IconButton>
+							}
 							inputMode="search"
 							allowClear
 						/>
 					</div>
 
 					<Link
-						href={"#"}
+						href={"tel:+8801842024378"}
 						className="hidden md:flex flex-col items-end justify-center"
 					>
 						<span className="text-sm font-semibold">

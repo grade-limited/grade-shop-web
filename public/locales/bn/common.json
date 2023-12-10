@@ -6,8 +6,8 @@
 	"HEADER": {
 		"SIGN": "সাইন ইন",
 		"CHANGE_LANGUAGE": "ভাষা পরিবর্তন",
-		"SEARCH": "অনুসন্ধান করুন",
-		"CONTACT_NUMBER": "+০৯৬১০৯৬০০০৩",
+		"SEARCH": "প্রোডাক্ট, ক্যাটাগরি, ব্র্যান্ড খুঁজুন...",
+		"CONTACT_NUMBER": "+৮৮০১৮৪২০২৪৩৭৮",
 		"CONTACT_SUBTITLE": "সাপোর্ট ২৪/৭"
 	},
 
@@ -34,11 +34,13 @@
 		"BLOG": "ব্লগ",
 		"CAREER": "ক্যারিয়ার",
 		"REFUND": "রিফান্ড",
+		"NEWSLETTER": "নিউজলেটার",
+		"NEWSLETTER_DESCRIPTION": "আমাদের নিউজলেটারে সাইন আপ করুন এবং আপনার ইনবক্সে সবচেয়ে শীঘ্রই আমাদের সবচেয়ে গরম অফার পেতে সাহায্য করুন।",
+		"NEWSLETTER_PLACEHOLDER": "eg: example@email.com",
 		"CANCELLATION_POLICY": "ক্যান্সেলেশন পলিসি",
 		"CONTACT": "যোগাযোগ",
-		"CONTACT_EMAIL": "support@reserveitbd.com",
-		"CONTACT_NUMBER": "09610960009",
-		"CONTACT_NUMBER_2": "01329638226",
+		"CONTACT_EMAIL": "sales@gradebd.com",
+		"CONTACT_NUMBER": "+8801842024378",
 		"DOWNLOAD_TEXT": "আমাদের অ্যাপটি ডাউনলোড করুন",
 		"PRIVACY_POLICY": "গোপনীয়তা নীতি",
 		"TERMS_OF_USE": "ব্যবহারের শর্তাবলী",
