@@ -28,27 +28,27 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
 		}
 	};
 
-	useEffect(() => {
-		try {
-			if (typeof window !== undefined && !!user.userId) {
-				registerDeviceForNotification(user.userId);
-				onMessageListener()
-					.then((payload: any) => {
-						if (payload?.notification?.body || payload?.notification?.title)
-							notification.info({
-								message: payload?.notification?.title,
-								description: payload?.notification?.body,
-								duration: 4.5,
-								placement: "bottomLeft",
-							});
-					})
-					.catch((err) => console.log("failed: ", err));
-			}
-		} catch {
-			return;
-		}
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [user.userID]);
+	// useEffect(() => {
+	// 	try {
+	// 		if (typeof window !== undefined && !!user.userId) {
+	// 			registerDeviceForNotification(user.userId);
+	// 			onMessageListener()
+	// 				.then((payload: any) => {
+	// 					if (payload?.notification?.body || payload?.notification?.title)
+	// 						notification.info({
+	// 							message: payload?.notification?.title,
+	// 							description: payload?.notification?.body,
+	// 							duration: 4.5,
+	// 							placement: "bottomLeft",
+	// 						});
+	// 				})
+	// 				.catch((err) => console.log("failed: ", err));
+	// 		}
+	// 	} catch {
+	// 		return;
+	// 	}
+	// 	// eslint-disable-next-line react-hooks/exhaustive-deps
+	// }, [user.userID]);
 
 	return (
 		<div className="w-full bg-slate-100 overflow-hidden">
@@ -59,7 +59,7 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
 					<Sidebar />
 				</div>
 				<section className="flex-1 relative h-[calc(100vh-72px)] md:h-[calc(100vh-96px)] overflow-y-auto">
-					<Container className="min-h-[60vh] overflow-x-hidden relative pt-2 pb-6 overflow-y-auto">
+					<Container className="min-h-[60vh] overflow-x-hidden relative pt-2 pb-6 overflow-y-auto max-w-none px-0">
 						{children}
 					</Container>
 					<Footer />
