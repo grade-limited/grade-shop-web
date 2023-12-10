@@ -35,3 +35,27 @@ export const useGetCategory = ({
 		initialData: initialData,
 	});
 };
+
+// Validation function with instance
+export const getCategoryById = (id: number, params?: any) => {
+	return instance.get(`/categories/${id}`, {
+		params,
+	});
+};
+
+export const useGetCategoryById = ({
+	id,
+	initialData,
+	params,
+}: {
+	id: number;
+	initialData: any;
+	params: any;
+}) => {
+	return useQuery(["category", id, params], () => getCategoryById(id, params), {
+		enabled: !!id,
+		select: (data) => data?.data?.data || {},
+		placeholderData: initialData,
+		initialData: initialData,
+	});
+};

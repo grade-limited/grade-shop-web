@@ -3,6 +3,7 @@ import { Menu, MenuProps, Skeleton } from "antd";
 import React from "react";
 import Image from "next/image";
 import { previewImage } from "@/service";
+import Link from "next/link";
 
 type MenuItem = Required<MenuProps>["items"][number];
 type CategoryItem = {
@@ -33,7 +34,7 @@ const generateItem = ({
 	children,
 }: CategoryItem): MenuItem =>
 	getItem(
-		name,
+		<Link href={`/category/${id}`}>{name}</Link>,
 		id,
 		icon_url ? (
 			<Image
