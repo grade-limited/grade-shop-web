@@ -1,0 +1,52 @@
+{
+	"SIGNIN": {
+		"WELCOME": "Sign in with",
+		"WELCOME_TEXT": "Phone Number or Email Address",
+		"OPTIONS": {
+			"PHONE": "Phone",
+			"EMAIL": "Email"
+		},
+		"EMAIL_ADDRESS": "Email Address",
+		"PHONE_NUMBER": "Phone Number",
+		"PASSWORD": "Password",
+		"FORGET_PASSWORD": "Forgot Password ?",
+		"SIGN_IN": "Sign in",
+		"DONT_HAVE_ANY_ACCOUNT": "Don't have any account?"
+	},
+	"REGISTER": {
+		"REGISTER_TITLE": "Let's Create \na New Account.",
+		"REGISTER_DESCRIPTION": "Please fill out the required fields in the form below to register account.\n\nIf there is any problem while signing in, go through the FAQs and, learn more about creating new account & policy.",
+		"USERNAME": "USERNAME",
+		"FIRST_NAME": "FIRST NAME",
+		"LAST_NAME": "LAST NAME",
+		"EMAIL_ADDRESS": "EMAIL ADDRESS",
+		"PHONE_NUMBER": "PHONE NUMBER",
+		"CREATE_NEW_PASSWORD": "CREATE A NEW PASSWORD",
+		"CONFIRM_NEW_PASSWORD": "CONFIRM NEW PASSWORD",
+		"REFERRAL_CODE": "REFERRAL CODE",
+		"SIGNUP": "Sign up",
+		"SIGNUP_TEXT": "By clicking the “Sign up” button, you are creating a Reserveit account and therefore you agree to Reserveit Company's Terms of Use and Privacy Policy.",
+		"ALREADY_HAVE_AN_ACCOUNT": "Already have an Account?",
+		"TOOLTIP": {
+			"USERNAME": "“Username” is not allowed to be empty",
+			"FIRST_NAME": "“First Name” is not allowed to be empty",
+			"LAST_NAME": "“Last Name” is not allowed to be empty",
+			"EMAIL_ADDRESS": "“Email” is not allowed to be empty",
+			"PHONE_NUMBER_EMPTY": "“Phone Number” is not allowed to be empty",
+			"PHONE_NUMBER_INVALID": "Invalid Phone Number"
+		}
+	},
+	"FORGOT_PASSWORD": {
+		"FORGOT_TITLE": "Forgot your password?",
+		"FORGOT_SUBTITLE": "Please enter the phone number associated with your account, and we'll send you a code to reset your password.",
+		"PHONE_NUMBER": "Phone Number",
+		"SEND": "Send",
+		"RETURN_TEXT": "Return to sign in"
+	},
+	"OTP_VERIFY": {
+		"VERIFY_TITLE": "Please check your phone",
+		"VERIFY_TEXT": "We've sent a 6-digit confirmation code to your phone, please enter the code below to verify.",
+		"DONT_HAVE_A_CODE": "Don't have a code?",
+		"RESEND": "Resend Code"
+	}
+}

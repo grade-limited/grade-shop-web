@@ -6,11 +6,26 @@ import { message } from "@/components/antd/message";
 export const useAuth = () => {
 	const [token, setToken] = useState<string | null>(authService.getToken());
 	const [user, setUser] = useState({
-		userId: 0,
-		name: "",
-		accessRights: [],
+		id: 0,
+		first_name: "",
+		last_name: "",
+		email: "",
+		phone: "",
 		username: "",
-		vendorId: 0,
+		gender: "Male",
+		display_picture: "",
+		dob: "",
+		address: "",
+		referral_code: "",
+		referred_by_id: 0,
+		max_session: 10,
+		is_active: true,
+		phone_verified_at: null,
+		email_verified_at: null,
+		registered_from: "Website",
+		created_at: null,
+		updated_at: null,
+		deleted_at: null,
 	});
 
 	useEffect(() => {

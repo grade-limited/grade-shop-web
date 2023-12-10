@@ -24,6 +24,7 @@ import { useToggle } from "@tam11a/react-use-hooks";
 import { useRouter } from "next/router";
 import { useAuth } from "@/service/auth";
 import { useTranslation } from "next-i18next";
+import UserNav from "@/components/pages/user/nav";
 
 const Header: React.FC = () => {
 	const [selectedLocation, setSelectedLocation] = React.useState<string | null>(
@@ -177,7 +178,7 @@ const Header: React.FC = () => {
 					className="mb-1"
 				/>
 				{isAuthenticated ? (
-					<>{/* <UserNav drawer /> */}</>
+					<UserNav drawer />
 				) : (
 					<div className="p-2">
 						<Link href={"/sign"}>

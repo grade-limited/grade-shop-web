@@ -5,20 +5,19 @@ import instance from "@/service";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 
 // Types
-import { ILogin, ISignup, IUpdateUser } from "./types";
-import { IUserId, IVendorId } from "@/types";
+import { IUserId } from "@/types";
 
 // Login function with instance
-const login = (data: ILogin) => {
-	return instance.post("/login", { ...data, type: "User" });
+const login = (data: any) => {
+	return instance.post("/auth/signin", { ...data });
 };
 export const useLogin = () => {
 	return useMutation(login);
 };
 
 // Sign Up function with instance
-const signup = (data: ISignup) => {
-	return instance.post("/signup", { ...data, type: "User" });
+const signup = (data: any) => {
+	return instance.post("/auth/signup", { ...data, registered_from: "Website" });
 };
 export const useSignup = () => {
 	return useMutation(signup);
@@ -26,7 +25,7 @@ export const useSignup = () => {
 
 //Logout function with instance
 const logout = () => {
-	return instance.put("/logout");
+	return instance.delete("/auth/signout");
 };
 export const useLogout = () => {
 	return useMutation(logout);
@@ -34,7 +33,7 @@ export const useLogout = () => {
 
 // Validation function with instance
 const getValidateUser = () => {
-	return instance.get("/currentuser");
+	return instance.get("/auth/validate");
 };
 
 export const useGetValidation = (token: string | null) => {
@@ -48,51 +47,11 @@ export const useGetValidation = (token: string | null) => {
 	});
 };
 
-// User information with user id
-const getUserInfo = (userId: IUserId) => {
-	return instance.get(`/user/info/${userId}`);
-};
-
-export const useGetUserInfo = (userId: IUserId) =>
-	useQuery(["user", userId], () => getUserInfo(userId), {
-		enabled: !!userId,
-		refetchOnWindowFocus: false,
-	});
-
-// User information with user id
-const getUserInfo2 = (userId: IUserId) => {
-	return instance.get(`/user/${userId}`);
-};
-
-export const useGetUserInfo2 = (userId: IUserId) =>
-	useQuery(["user-2", userId], () => getUserInfo2(userId), {
-		enabled: !!userId,
-		refetchOnWindowFocus: false,
-	});
-
-// Referral Code get
-const getReferral = () => {
-	return instance.get(`/referral/get-referral-link`);
-};
-
-export const useGetReferral = () =>
-	useQuery(["ref-code"], () => getReferral(), {
-		refetchOnWindowFocus: false,
-	});
-
 // User information update
 
-const updateUserInfo = ({
-	userId,
-	data,
-}: {
-	userId: IUserId;
-	data: IUpdateUser | any;
-}) => {
-	return instance.put(`/update-user/${userId}`, {
+const updateUserInfo = (data: any) => {
+	return instance.patch(`/auth/update`, {
 		...data,
-		isActive: true,
-		userType: "User",
 	});
 };
 
@@ -100,21 +59,17 @@ export const useUpdateUserInfo = () => {
 	const query = useQueryClient();
 	return useMutation([], updateUserInfo, {
 		onSuccess: () => {
-			query.invalidateQueries(["user"]);
 			query.invalidateQueries(["validate"]);
 		},
 	});
 };
 
 const updatePassword = (data: {
-	phone?: string;
-	currentPassword?: string;
-	password?: string;
-	token: string | null;
+	current_password?: string;
+	new_password?: string;
 }) => {
-	return instance.put(`/update-password`, {
+	return instance.patch(`/auth/reset-password`, {
 		...data,
-		userType: "User",
 	});
 };
 
@@ -163,53 +118,3 @@ const registerDevice = ({
 	);
 
 export const useRegisterDevice = () => useMutation(registerDevice);
-
-const bookmarkRestaurant = ({
-	vendorId,
-	value,
-}: {
-	vendorId: IVendorId;
-	value: boolean;
-}) => {
-	return value
-		? instance.post(`/user/save-restaurant/${vendorId}`)
-		: instance.delete(`/user/save-restaurant/${vendorId}`);
-};
-
-export const useBookmarkRestaurant = () => {
-	const queryClient = useQueryClient();
-	return useMutation(bookmarkRestaurant, {
-		onSuccess: () => {
-			queryClient.invalidateQueries(["user"]);
-			queryClient.invalidateQueries(["user-2"]);
-		},
-	});
-};
-
-const getReservationList = ({
-	userId,
-	status,
-}: {
-	userId: IUserId;
-	status?: string;
-}) => {
-	return instance.get(`/reservations`, {
-		params: {
-			userId,
-			status,
-			pageSize: 1000,
-		},
-	});
-};
-export const useGetReservationList = (userId: IUserId, status?: string) => {
-	return useQuery(
-		["Reservation-List", userId, status],
-		() => getReservationList({ userId, status }),
-		{
-			enabled: !!userId,
-			select: (data) => {
-				return data.data;
-			},
-		}
-	);
-};

@@ -13,6 +13,14 @@
 
 	"SEE_MORE": "See More",
 	"READ_MORE": "Read More",
+	"USER_NAV": {
+		"ACCOUNT": "Account",
+		"ORDERS": "Orders",
+		"LOGOUT": "Logout",
+		"SECURITY": "Security",
+		"SAVED_PRODUCTS": "Saved Products",
+		"MY_CART": "My Cart"
+	},
 	"FOOTER": {
 		"COMPANY_NAME": "Grade E-Mart",
 		"DESCRIPTION": "The most popular and reliable website for making restaurant reservations in Bangladesh. A user-friendly app that makes dining out easier. Select, Click, Reserve, and enjoy hassle-free dining experiences.",
