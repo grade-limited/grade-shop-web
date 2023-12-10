@@ -1,6 +1,6 @@
 import Iconify from "@/components/iconify";
 import { useGetSearchCategory } from "@/queries/category";
-import { Menu, MenuProps } from "antd";
+import { Menu, MenuProps, Skeleton } from "antd";
 import React from "react";
 import Image from "next/image";
 import { previewImage } from "@/service";
@@ -51,21 +51,28 @@ const generateItem = ({
 	);
 
 const Sidebar: React.FC = () => {
-	const { data } = useGetSearchCategory();
-	console.log(data);
-
+	const { data, isLoading } = useGetSearchCategory();
 	return (
 		<aside className="w-72 h-[calc(100vh-72px)] md:h-[calc(100vh-96px)] bg-white relative overflow-y-auto">
-			<Menu
-				defaultSelectedKeys={["1"]}
-				defaultOpenKeys={["sub1"]}
-				mode={"inline"}
-				inlineCollapsed={false}
-				theme={"light"}
-				items={Array.from(data ?? [], (item: CategoryItem) =>
-					generateItem(item)
-				)}
-			/>
+			{isLoading ? (
+				<div className="p-3 [&>*]:my-3">
+					<Skeleton />
+					<Skeleton />
+					<Skeleton />
+				</div>
+			) : (
+				<Menu
+					defaultSelectedKeys={["1"]}
+					defaultOpenKeys={["sub1"]}
+					mode={"inline"}
+					inlineCollapsed={false}
+					theme={"light"}
+					items={Array.from(data ?? [], (item: CategoryItem) =>
+						generateItem(item)
+					)}
+					className="[&>.ant-menu-submenu>.ant-menu-submenu-title]:pl-2"
+				/>
+			)}
 		</aside>
 	);
 };
