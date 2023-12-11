@@ -43,12 +43,7 @@ export const resolver = Joi.object({
 });
 
 const EmployeeForm: React.FC<{ onClose: () => void }> = ({ onClose }) => {
-	const {
-		handleSubmit,
-		control,
-		reset,
-		formState: { errors },
-	} = useForm({
+	const { handleSubmit, control, reset } = useForm({
 		resolver: joiResolver(resolver),
 	});
 
