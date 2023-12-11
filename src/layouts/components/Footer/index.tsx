@@ -19,6 +19,8 @@ import ScrollToTop from "react-scroll-to-top";
 const Footer: React.FC = () => {
 	const { t } = useTranslation("common");
 
+	const [newsletterEmail, setNewsletterEmail] = React.useState("");
+
 	return (
 		<footer>
 			<ScrollToTop
@@ -194,19 +196,29 @@ const Footer: React.FC = () => {
 						>
 							{t("FOOTER.NEWSLETTER_DESCRIPTION")}
 						</Typography>
-						<Input
-							placeholder={t("FOOTER.NEWSLETTER_PLACEHOLDER")}
-							bordered={false}
-							className="bg-slate-600 max-w-xs mt-2 pl-3 pr-1 [&>input]:text-white [&>input]:placeholder-slate-400 placeholder-white text-white"
-							suffix={
-								<IconButton
-									color="primary"
-									className="bg-slate-800 rounded-md"
-								>
-									<Iconify icon="lets-icons:send-duotone" />
-								</IconButton>
-							}
-						/>
+						<form
+							onSubmit={(e) => {
+								e.preventDefault(); // !important
+								console.log(newsletterEmail);
+							}}
+						>
+							<Input
+								value={newsletterEmail}
+								placeholder={t("FOOTER.NEWSLETTER_PLACEHOLDER")}
+								bordered={false}
+								className="bg-slate-600 max-w-xs mt-2 pl-3 pr-1 [&>input]:text-white [&>input]:placeholder-slate-400 placeholder-white text-white"
+								onChange={(e) => setNewsletterEmail(e.target.value)}
+								suffix={
+									<IconButton
+										color="primary"
+										className="bg-slate-800 rounded-md"
+										type="submit"
+									>
+										<Iconify icon="lets-icons:send-duotone" />
+									</IconButton>
+								}
+							/>
+						</form>
 					</Grid>
 				</Grid>
 				<div className="bg-slate-900 py-10 mt-10 flex flex-row items-center justify-between px-10">
