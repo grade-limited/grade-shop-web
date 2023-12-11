@@ -34,6 +34,41 @@ function getLowestQuantities(entries: AccountEntry[] = []): {
 	return lowestQuantities;
 }
 
+function findUnitPrice(
+	accountType: string,
+	quantity: number,
+	pricingChart: any
+): number | null {
+	const priceInfo = pricingChart
+		.filter(
+			(item: any) =>
+				item.account_type === accountType && item.min_quantity <= quantity
+		)
+		.sort((a: any, b: any) => {
+			const minQuantityA = parseInt(a.min_quantity, 10);
+			const minQuantityB = parseInt(b.min_quantity, 10);
+			return minQuantityA - minQuantityB;
+		});
+
+	if (!priceInfo?.length) {
+		console.error(
+			`No pricing information found for account type: ${accountType}`
+		);
+		return parseInt(
+			pricingChart
+				.filter((item: any) => item.account_type === accountType)
+				.sort((a: any, b: any) => {
+					const minQuantityA = parseInt(a.min_quantity, 10);
+					const minQuantityB = parseInt(b.min_quantity, 10);
+					return minQuantityA - minQuantityB;
+				})?.[0]?.per_unit || "0",
+			10
+		);
+	}
+
+	return parseInt(priceInfo?.[priceInfo?.length - 1]?.per_unit || "0", 10);
+}
+
 const Product: React.FC<{ data: any }> = ({ data }) => {
 	const router = useRouter();
 	const { id } = router.query;
@@ -69,11 +104,6 @@ const Product: React.FC<{ data: any }> = ({ data }) => {
 			setThumbnail(images[0]);
 		}
 	}, [images, isFetchedAfterMount]);
-
-	console.log(
-		productData?.minimum_order_quantity,
-		getLowestQuantities(productData?.minimum_order_quantity as AccountEntry[])
-	);
 
 	return (
 		<>
@@ -192,6 +222,19 @@ const Product: React.FC<{ data: any }> = ({ data }) => {
 									children: (
 										<>
 											{/* Add to Cart Button */}
+
+											<p className="mt-2 text-base">
+												<span className="font-bold">Price:</span>
+												<span className="ml-2">
+													{findUnitPrice("bb2e", 1, productData?.price)}
+												</span>
+											</p>
+											<p className="mt-2 text-2xl text-primary">
+												<span className="font-bold">Grade Price:</span>
+												<span className="ml-2">
+													{findUnitPrice("bb2e", 1, productData?.price)}
+												</span>
+											</p>
 											{productData?.minimum_order_quantity &&
 											getLowestQuantities(
 												productData?.minimum_order_quantity as AccountEntry[]
@@ -229,6 +272,18 @@ const Product: React.FC<{ data: any }> = ({ data }) => {
 									children: (
 										<>
 											{/* Add to Cart Button */}
+											<p className="mt-2 text-base">
+												<span className="font-bold">Price:</span>
+												<span className="ml-2">
+													{findUnitPrice("b2b", 1, productData?.price)}
+												</span>
+											</p>
+											<p className="mt-2 text-base">
+												<span className="font-bold">Grade Price:</span>
+												<span className="ml-2">
+													{findUnitPrice("b2b", 1, productData?.price)}
+												</span>
+											</p>
 											{productData?.minimum_order_quantity &&
 											getLowestQuantities(
 												productData?.minimum_order_quantity as AccountEntry[]
