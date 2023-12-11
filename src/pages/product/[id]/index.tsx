@@ -7,18 +7,29 @@ import xss from "xss";
 import { getProductById, useGetProductById } from "@/queries/product";
 import Image from "next/image";
 import { previewImage } from "@/service";
+import React from "react";
+import { Breadcrumb } from "antd";
 
-const Category: React.FC<{ data: any }> = ({ data }) => {
+const Product: React.FC<{ data: any }> = ({ data }) => {
 	const router = useRouter();
 	const { id } = router.query;
 
 	const { t } = useTranslation("product");
+
+	const [thumbnail, setThumbnail] = React.useState<string | null>(null);
 
 	const { data: productData } = useGetProductById({
 		id: parseInt(id as string),
 		initialData: data?.productById,
 		params: {},
 	});
+
+	React.useLayoutEffect(() => {
+		if (productData?.thumbnail_url) {
+			setThumbnail(previewImage(productData?.thumbnail_url));
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
 
 	console.log(productData);
 
@@ -45,35 +56,58 @@ const Category: React.FC<{ data: any }> = ({ data }) => {
 					content="width=device-width, initial-scale=1"
 				/>
 			</Head>
-			<main className="px-5 py-3 flex flex-row gap-4">
-				{productData?.thumbnail_url && (
-					<Image
-						src={previewImage(productData?.thumbnail_url)}
-						alt={productData?.name}
-						width={540}
-						height={820}
-						priority
-						style={{
-							position: "relative",
-							objectFit: "cover",
-							objectPosition: "center",
-							borderRadius: "6px",
-						}}
-					/>
-				)}
-				<div className="flex-1">
-					<h1 className="text-2xl font-bold mt-4 mb-2">{productData?.name}</h1>
-					<div
-						className="text-justify"
-						dangerouslySetInnerHTML={{
-							__html: xss(productData?.description, {
-								// whiteList: {}, // empty, means filter out all tags
-								// stripIgnoreTag: true, // filter out all HTML not in the whilelist
-								stripIgnoreTagBody: ["script"], // the script tag is a special case, we need
-								// to filter out its content
-							}),
-						}}
-					/>
+			<main className="px-5 py-3">
+				<div className="flex flex-col lg:flex-row gap-4">
+					{thumbnail && (
+						<Image
+							src={thumbnail}
+							alt={productData?.name}
+							width={540}
+							height={820}
+							priority
+							style={{
+								position: "relative",
+								objectFit: "cover",
+								objectPosition: "center",
+								borderRadius: "6px",
+								maxWidth: "500px",
+							}}
+						/>
+					)}
+					<div className="flex-1">
+						{!!productData?.category && (
+							<h2>
+								<Breadcrumb>
+									{!!productData?.category?.parent_id && (
+										<Breadcrumb.Item
+											href={`/category/${productData?.category?.parent?.id}`}
+										>
+											{productData?.category?.parent?.name}
+										</Breadcrumb.Item>
+									)}
+									{!!productData?.category && (
+										<Breadcrumb.Item
+											href={`/category/${productData?.category?.id}`}
+										>
+											{productData?.category?.name}
+										</Breadcrumb.Item>
+									)}
+								</Breadcrumb>
+							</h2>
+						)}
+						<h1 className="text-2xl font-bold my-2">{productData?.name}</h1>
+						<div
+							className="text-justify max-w-md"
+							dangerouslySetInnerHTML={{
+								__html: xss(productData?.description, {
+									// whiteList: {}, // empty, means filter out all tags
+									// stripIgnoreTag: true, // filter out all HTML not in the whilelist
+									stripIgnoreTagBody: ["script"], // the script tag is a special case, we need
+									// to filter out its content
+								}),
+							}}
+						/>
+					</div>
 				</div>
 			</main>
 		</>
@@ -124,4 +158,4 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 	}
 };
 
-export default Category;
+export default Product;
