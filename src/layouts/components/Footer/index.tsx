@@ -200,6 +200,7 @@ const Footer: React.FC = () => {
 							onSubmit={(e) => {
 								e.preventDefault(); // !important
 								console.log(newsletterEmail);
+								// Submit from here
 							}}
 						>
 							<Input
