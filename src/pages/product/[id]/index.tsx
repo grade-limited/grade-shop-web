@@ -140,14 +140,18 @@ const Product: React.FC<{ data: any }> = ({ data }) => {
 						)}
 						<h1 className="text-2xl font-bold my-2">{productData?.name}</h1>
 						<Tag color="#87d068">In Stock</Tag>
-						<p className="mt-3">
-							<span className="font-bold">SKU:</span>
-							<span className="ml-2">{productData?.sku}</span>
-						</p>
-						<p className="mt-2">
-							<span className="font-bold">Unit of Measure:</span>
-							<span className="ml-2">{productData?.unit_of_measure}</span>
-						</p>
+						{productData?.sku && (
+							<p className="mt-3">
+								<span className="font-bold">SKU:</span>
+								<span className="ml-2">{productData?.sku}</span>
+							</p>
+						)}
+						{productData?.unit_of_measure && (
+							<p className="mt-2">
+								<span className="font-bold">Unit of Measure:</span>
+								<span className="ml-2">{productData?.unit_of_measure}</span>
+							</p>
+						)}
 
 						<div
 							className="text-justify max-w-md mt-2"
