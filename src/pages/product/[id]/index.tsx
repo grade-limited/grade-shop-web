@@ -218,32 +218,30 @@ const Product: React.FC<{ data: any }> = ({ data }) => {
 							items={[
 								{
 									key: "bb2e",
-									label: "Personal Order",
+									label: "Personal",
 									children: (
 										<>
-											{/* Add to Cart Button */}
-
-											<p className="mt-2 text-base">
+											<p className="mt-2 text-lg">
 												<span className="font-bold">Price:</span>
-												<span className="ml-2">
-													{findUnitPrice("bb2e", 1, productData?.price)}
+												<span className="ml-2 font-semibold">
+													{productData?.market_price || 0}৳
 												</span>
 											</p>
-											<p className="mt-2 text-2xl text-primary">
+											<p className="text-2xl text-primary">
 												<span className="font-bold">Grade Price:</span>
-												<span className="ml-2">
-													{findUnitPrice("bb2e", 1, productData?.price)}
+												<span className="ml-2 font-semibold">
+													{findUnitPrice("bb2e", 1, productData?.price)}৳
 												</span>
 											</p>
 											{productData?.minimum_order_quantity &&
 											getLowestQuantities(
 												productData?.minimum_order_quantity as AccountEntry[]
 											)?.["bb2e"] ? (
-												<p className="mt-2 text-base">
+												<p className="mt-3 text-sm text-slate-500">
 													<span className="font-bold">
 														Minimum Order Quantity:
 													</span>
-													<span className="ml-2">
+													<span className="ml-2 font-bold">
 														{
 															getLowestQuantities(
 																productData?.minimum_order_quantity as AccountEntry[]
@@ -258,7 +256,7 @@ const Product: React.FC<{ data: any }> = ({ data }) => {
 												variant="contained"
 												color="primary"
 												size="large"
-												className="mt-5 rounded-md bg-slate-700 hover:bg-slate-600"
+												className="mt-1 rounded-md bg-slate-700 hover:bg-slate-600"
 												startIcon={<Iconify icon={"fa-solid:cart-plus"} />}
 											>
 												Add to Cart
@@ -268,31 +266,30 @@ const Product: React.FC<{ data: any }> = ({ data }) => {
 								},
 								{
 									key: "b2b",
-									label: "Company Order",
+									label: "Company",
 									children: (
 										<>
-											{/* Add to Cart Button */}
-											<p className="mt-2 text-base">
+											<p className="mt-2 text-lg">
 												<span className="font-bold">Price:</span>
-												<span className="ml-2">
-													{findUnitPrice("b2b", 1, productData?.price)}
+												<span className="ml-2 font-semibold">
+													{productData?.market_price || 0}৳
 												</span>
 											</p>
-											<p className="mt-2 text-base">
+											<p className="text-2xl text-primary">
 												<span className="font-bold">Grade Price:</span>
-												<span className="ml-2">
-													{findUnitPrice("b2b", 1, productData?.price)}
+												<span className="ml-2 font-semibold">
+													{findUnitPrice("b2b", 1, productData?.price)}৳
 												</span>
 											</p>
 											{productData?.minimum_order_quantity &&
 											getLowestQuantities(
 												productData?.minimum_order_quantity as AccountEntry[]
 											)?.["b2b"] ? (
-												<p className="mt-2 text-base">
+												<p className="mt-3 text-sm text-slate-500">
 													<span className="font-bold">
 														Minimum Order Quantity:
 													</span>
-													<span className="ml-2">
+													<span className="ml-2 font-bold">
 														{
 															getLowestQuantities(
 																productData?.minimum_order_quantity as AccountEntry[]
@@ -307,7 +304,7 @@ const Product: React.FC<{ data: any }> = ({ data }) => {
 												variant="contained"
 												color="primary"
 												size="large"
-												className="mt-5 rounded-md bg-slate-700 hover:bg-slate-600"
+												className="mt-1 rounded-md bg-slate-700 hover:bg-slate-600"
 												startIcon={<Iconify icon={"fa-solid:cart-plus"} />}
 											>
 												Add to Cart
