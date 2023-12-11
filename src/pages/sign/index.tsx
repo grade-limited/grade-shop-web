@@ -18,30 +18,50 @@ import { message } from "@/components/antd/message";
 import handleResponse from "@/utilities/handleResponse";
 import { authService } from "@/service/auth";
 import { useLogin } from "@/queries/auth";
-
-export const loginResolver = Joi.object({
-	phone: Joi.string()
-		.label("Phone Number")
-		.pattern(/01\d{9}$/)
-		.required()
-		.messages({
-			"string.pattern.base": "Invalid Phone Number",
-		}),
-	password: Joi.string().label("Password").min(6).required(),
-	remember: Joi.boolean().default(true),
-});
+import { SegmentedValue } from "antd/es/segmented";
+import { useToggle } from "@tam11a/react-use-hooks";
+import Register from "@/components/pages/sign/Register";
 
 function Sign() {
 	const { t } = useTranslation("signin");
+
+	const loginResolver = Joi.object({
+		type: Joi.string().valid("phone", "email").required().default("phone"),
+		phone: Joi.alternatives().conditional("type", {
+			is: "phone",
+			then: Joi.string()
+				.label("Phone Number")
+				.pattern(/01\d{9}$/)
+				.required()
+				.messages({
+					"string.pattern.base": "Invalid Phone Number",
+				}),
+			otherwise: Joi.string().allow("").optional(),
+		}),
+		email: Joi.alternatives().conditional("type", {
+			is: "email",
+			then: Joi.string()
+				.label("Email")
+				.email({ tlds: { allow: false } })
+				.required(),
+			otherwise: Joi.string().allow("").optional(),
+		}),
+		password: Joi.string().label("Password").min(6).required(),
+		remember: Joi.boolean().default(true),
+	});
 
 	const {
 		// reset,
 		handleSubmit,
 		control,
+		watch,
+		setValue,
 	} = useForm({
 		resolver: joiResolver(loginResolver),
 		defaultValues: {
+			type: "phone",
 			phone: "",
+			email: "",
 			password: "",
 			remember: true,
 		},
@@ -50,15 +70,19 @@ function Sign() {
 	const { mutateAsync: mutateLogin, isLoading: isLoginLoading } = useLogin();
 
 	const onSubmit = async (data: any) => {
-		const { phone, password } = data;
-
+		const { type, phone, email, password } = data;
 		message.open({
 			type: "loading",
 			content: "Logging in..",
 			duration: 0,
 		});
 
-		const res = await handleResponse(() => mutateLogin({ phone, password }));
+		const res = await handleResponse(() =>
+			mutateLogin({
+				...(type === "phone" ? { phone } : { email }),
+				password,
+			})
+		);
 		message.destroy();
 		if (res.status && !!res.data?.jwt) {
 			message.success(res.message || "Logged in successfully!");
@@ -70,6 +94,8 @@ function Sign() {
 			}
 		}
 	};
+
+	const { state, toggleState } = useToggle(false);
 
 	return (
 		<>
@@ -100,6 +126,8 @@ function Sign() {
 						<span className="text-base">{t("SIGNIN.WELCOME_TEXT")}</span>
 					</h2>
 					<Segmented
+						value={watch("type") as SegmentedValue}
+						onChange={(value) => setValue("type", value as string)}
 						options={[
 							{
 								label: t("SIGNIN.OPTIONS.PHONE"),
@@ -120,6 +148,7 @@ function Sign() {
 										className="inline-flex"
 									/>
 								),
+								disabled: true,
 							},
 						]}
 						size="large"
@@ -129,36 +158,74 @@ function Sign() {
 						className="mt-7"
 						onSubmit={handleSubmit(onSubmit)}
 					>
-						<div>
-							<Label isRequired>{t("SIGNIN.PHONE_NUMBER")}</Label>
-							<Controller
-								control={control}
-								name={"phone"}
-								rules={{ required: true }}
-								render={({
-									field: { onChange, onBlur, value },
-									fieldState: { error },
-								}) => (
-									<Input
-										prefix={
-											<Iconify
-												icon="ph:phone"
-												color="#999"
-												className="mr-1 text-xl"
+						{watch("type") === "email" && (
+							<>
+								<div>
+									<Label isRequired>{t("SIGNIN.EMAIL_ADDRESS")}</Label>
+									<Controller
+										control={control}
+										name={"email"}
+										rules={{ required: true }}
+										render={({
+											field: { onChange, onBlur, value },
+											fieldState: { error },
+										}) => (
+											<Input
+												prefix={
+													<Iconify
+														icon="ic:baseline-alternate-email"
+														color="#999"
+														className="mr-1 text-xl"
+													/>
+												}
+												placeholder={"Email"}
+												size={"large"}
+												onChange={onChange}
+												className="rounded-full"
+												onBlur={onBlur}
+												value={value}
+												status={error ? "error" : ""}
+												suffix={<ErrorSuffix error={error} />}
 											/>
-										}
-										placeholder={"Phone Number"}
-										size={"large"}
-										onChange={onChange}
-										className="rounded-full"
-										onBlur={onBlur}
-										value={value}
-										status={error ? "error" : ""}
-										suffix={<ErrorSuffix error={error} />}
+										)}
 									/>
-								)}
-							/>
-						</div>
+								</div>
+							</>
+						)}
+						{watch("type") === "phone" && (
+							<>
+								<div>
+									<Label isRequired>{t("SIGNIN.PHONE_NUMBER")}</Label>
+									<Controller
+										control={control}
+										name={"phone"}
+										rules={{ required: true }}
+										render={({
+											field: { onChange, onBlur, value },
+											fieldState: { error },
+										}) => (
+											<Input
+												prefix={
+													<Iconify
+														icon="ph:phone"
+														color="#999"
+														className="mr-1 text-xl"
+													/>
+												}
+												placeholder={"Phone Number"}
+												size={"large"}
+												onChange={onChange}
+												className="rounded-full"
+												onBlur={onBlur}
+												value={value}
+												status={error ? "error" : ""}
+												suffix={<ErrorSuffix error={error} />}
+											/>
+										)}
+									/>
+								</div>
+							</>
+						)}
 						<div>
 							<Controller
 								control={control}
@@ -198,7 +265,7 @@ function Sign() {
 								)}
 							/>
 						</div>
-						<Link
+						{/* <Link
 							href={"/sign/recover"}
 							className="w-fit mx-auto"
 						>
@@ -208,7 +275,7 @@ function Sign() {
 							>
 								{t("SIGNIN.FORGET_PASSWORD")}
 							</Typography>
-						</Link>
+						</Link> */}
 						<Button
 							size="large"
 							variant="contained"
@@ -225,20 +292,20 @@ function Sign() {
 						</Button>
 
 						<div className="w-full grid items-center">
-							<Link
-								href={"/sign/register"}
-								className="w-fit mx-auto"
+							<Typography
+								variant="subtitle2"
+								className="flex flex-row items-center gap-2 font-semibold text-center w-fit cursor-pointer mx-auto"
+								onClick={toggleState}
 							>
-								<Typography
-									variant="subtitle2"
-									className="flex flex-row items-center gap-2 font-semibold text-center w-fit"
-								>
-									<span>{t("SIGNIN.DONT_HAVE_ANY_ACCOUNT")}</span>
-									<Iconify icon={"material-symbols:arrow-forward-ios"} />
-								</Typography>
-							</Link>
+								<span>{t("SIGNIN.DONT_HAVE_ANY_ACCOUNT")}</span>
+								<Iconify icon={"material-symbols:arrow-forward-ios"} />
+							</Typography>
 						</div>
 					</form>
+					<Register
+						open={state}
+						onClose={toggleState}
+					/>
 				</Container>
 			</main>
 		</>

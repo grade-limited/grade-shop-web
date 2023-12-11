@@ -64,22 +64,22 @@ const UserNav: React.FC<{ children?: React.ReactNode; drawer?: boolean }> = ({
 		// 	key: "refer",
 		// 	href: "/user/refer",
 		// },
-		{
-			title: (
-				<>
-					<InlineIcon
-						icon={"majesticons:heart"}
-						className="text-xl"
-					/>{" "}
-					Saved Products{" "}
-					{!!user?.savedProduct?.length
-						? `(${user?.savedProduct?.length})`
-						: ""}
-				</>
-			),
-			key: "saved",
-			href: "/user/saved-products",
-		},
+		// {
+		// 	title: (
+		// 		<>
+		// 			<InlineIcon
+		// 				icon={"majesticons:heart"}
+		// 				className="text-xl"
+		// 			/>{" "}
+		// 			Saved Products{" "}
+		// 			{!!user?.savedProduct?.length
+		// 				? `(${user?.savedProduct?.length})`
+		// 				: ""}
+		// 		</>
+		// 	),
+		// 	key: "saved",
+		// 	href: "/user/saved-products",
+		// },
 	];
 	const router = useRouter();
 	return (

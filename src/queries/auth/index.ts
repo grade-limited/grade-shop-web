@@ -17,7 +17,11 @@ export const useLogin = () => {
 
 // Sign Up function with instance
 const signup = (data: any) => {
-	return instance.post("/auth/signup", { ...data, registered_from: "Website" });
+	return instance.post("/auth/signup", {
+		...data,
+		primary_contact: "phone",
+		registered_from: "Website",
+	});
 };
 export const useSignup = () => {
 	return useMutation(signup);
