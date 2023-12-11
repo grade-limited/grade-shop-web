@@ -6,8 +6,15 @@ import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { useTranslation } from "next-i18next";
 import { getCampaigns, useGetCampaigns } from "@/queries/campaign";
 import Banner from "@/components/pages/home/Banner";
-import { getCategory, useGetCategory } from "@/queries/category";
+import {
+	getCategory,
+	getShopCatProd,
+	useGetCategory,
+	useGetShopCatProd,
+} from "@/queries/category";
 import Category from "@/components/pages/home/Category";
+import CatProd from "@/components/pages/home/CatProd";
+import { getBrands, useGetBrands } from "@/queries/brand";
 
 export default function Home({ data }: { data: any }) {
 	const { t } = useTranslation("common");
@@ -23,6 +30,19 @@ export default function Home({ data }: { data: any }) {
 			limit: 1000,
 		},
 	});
+
+	const { data: BrandData } = useGetBrands({
+		initialData: data?.brands,
+		params: {
+			limit: 100,
+		},
+	});
+
+	const { data: catprod } = useGetShopCatProd({
+		initialData: data?.catprod,
+	});
+
+	console.log(BrandData);
 
 	return (
 		<>
@@ -42,6 +62,14 @@ export default function Home({ data }: { data: any }) {
 				<div className="p-4">
 					<Category categories={CategoryData?.data || []} />
 				</div>
+				{catprod?.map?.((item: any) => {
+					return (
+						<CatProd
+							key={item.id}
+							data={item}
+						/>
+					);
+				})}
 			</main>
 		</>
 	);
@@ -54,6 +82,12 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 			only_parent: true,
 			limit: 1000,
 		});
+		const brands = await getBrands({
+			limit: 100,
+		});
+
+		const catprod = await getShopCatProd();
+
 		return {
 			props: {
 				data: {
@@ -62,6 +96,12 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 					},
 					categories: {
 						data: categories?.data || {},
+					},
+					catprod: {
+						data: catprod?.data || {},
+					},
+					brands: {
+						data: brands?.data || {},
 					},
 				},
 				...(await serverSideTranslations(context.locale ?? "en", [

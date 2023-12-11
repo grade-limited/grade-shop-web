@@ -43,12 +43,6 @@ const Header: React.FC = () => {
 	}, [selectedLocation]);
 
 	const {
-		state: openSearch,
-		toggleState: toggleSearch,
-		setState: setSearch,
-	} = useToggle(false);
-
-	const {
 		state: openMenu,
 		toggleState: toggleMenu,
 		setState: setMenu,
@@ -56,7 +50,6 @@ const Header: React.FC = () => {
 
 	const router = useRouter();
 	React.useEffect(() => {
-		setSearch(false);
 		setMenu(false);
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [router]);
@@ -75,6 +68,8 @@ const Header: React.FC = () => {
 	};
 
 	const changeTo = router.locale === "en" ? "bn" : "en";
+
+	const [search, setSearch] = React.useState<string | null>(null);
 
 	return (
 		<header className="fixed w-full z-30">
@@ -107,21 +102,38 @@ const Header: React.FC = () => {
 						</Link>
 					</div>
 					<div className="flex-1">
-						<Input
-							bordered={false}
-							placeholder={t("HEADER.SEARCH")}
-							className="max-w-sm rounded-full bg-slate-600 px-4 text-white pr-1 pl-6 [&>input]:bg-slate-600 [&>input]:text-white [&>input]:placeholder-slate-400"
-							suffix={
-								<IconButton
-									color="primary"
-									className="bg-slate-800"
-								>
-									<Iconify icon="lets-icons:search-duotone" />
-								</IconButton>
-							}
-							inputMode="search"
-							allowClear
-						/>
+						<form
+							onSubmit={(e) => {
+								e.preventDefault();
+								router.push({
+									pathname: "/search",
+									query: {
+										q: search,
+									},
+								});
+							}}
+						>
+							<Input
+								bordered={false}
+								placeholder={t("HEADER.SEARCH")}
+								className="max-w-sm rounded-full bg-slate-600 px-4 text-white pr-1 pl-6 [&>input]:bg-slate-600 [&>input]:text-white [&>input]:placeholder-slate-400"
+								value={search || ""}
+								suffix={
+									<IconButton
+										color="primary"
+										className="bg-slate-800"
+										type="submit"
+									>
+										<Iconify icon="lets-icons:search-duotone" />
+									</IconButton>
+								}
+								onChange={(e) => {
+									setSearch(e.target.value);
+								}}
+								inputMode="search"
+								// allowClear
+							/>
+						</form>
 					</div>
 
 					<Link
@@ -146,24 +158,6 @@ const Header: React.FC = () => {
 				</Toolbar>
 			</AppBar>
 
-			<Drawer
-				anchor={"top"}
-				open={openSearch}
-				onClose={toggleSearch}
-				PaperProps={{
-					className:
-						"p-5 min-h-[320px]  flex flex-col items-center justify-center",
-				}}
-			>
-				<div className="w-[90%] mx-auto max-w-4xl">
-					<IconButton
-						className="float-right mb-3 mr-3"
-						onClick={toggleSearch}
-					>
-						<Iconify icon={"ep:close-bold"} />
-					</IconButton>
-				</div>
-			</Drawer>
 			<Drawer
 				anchor={"right"}
 				open={openMenu}

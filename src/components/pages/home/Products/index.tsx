@@ -5,9 +5,9 @@ import { Empty } from "antd";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
+import { findUnitPrice } from "../../../../pages/product/[id]/index";
 
 const Products: React.FC<{ products: any[] }> = ({ products }) => {
-	console.log(products);
 	return products?.length === 0 ? (
 		<div>
 			<Empty
@@ -56,16 +56,20 @@ const Products: React.FC<{ products: any[] }> = ({ products }) => {
 							<span className="text-sm text-slate-400">
 								{product?.brand?.name}
 							</span>
-							{/* {!!product?.price?.length && (
-								<span className="text-sm text-slate-400">
-									&bull; {product?.price}
+							{!!product?.price?.length && (
+								<span className="text-sm font-bold text-slate-700">
+									{" "}
+									&bull; {findUnitPrice("b2b", 1, product?.price)}৳
 								</span>
-							)} */}
-							{/* {product?.actual_price && (
-								<span className="text-sm text-slate-400">
-									&bull; {product?.actual_price}
-								</span>
-							)} */}
+							)}
+							{!!product?.market_price && (
+								<>
+									{" "}
+									<del className="text-sm text-slate-400">
+										{product?.market_price}৳
+									</del>
+								</>
+							)}
 						</div>
 					</div>
 					<Button

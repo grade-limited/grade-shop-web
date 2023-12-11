@@ -16,6 +16,19 @@ export const useGetSearchCategory = () => {
 };
 
 // Validation function with instance
+export const getShopCatProd = () => {
+	return instance.get("/shop/landing/cat-prod");
+};
+
+export const useGetShopCatProd = ({ initialData }: { initialData: any }) => {
+	return useQuery(["search-cat-prod"], getShopCatProd, {
+		select: (data) => data?.data || [],
+		placeholderData: initialData,
+		initialData: initialData,
+	});
+};
+
+// Validation function with instance
 export const getCategory = (params?: any) => {
 	return instance.get("/categories", {
 		params,

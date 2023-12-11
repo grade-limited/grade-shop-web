@@ -3,7 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 
 // Validation function with instance
 export const getProducts = (params?: any) => {
-	return instance.get("/products", {
+	return instance.get("/shop/product-search", {
 		params,
 	});
 };

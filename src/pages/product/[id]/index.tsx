@@ -34,7 +34,7 @@ function getLowestQuantities(entries: AccountEntry[] = []): {
 	return lowestQuantities;
 }
 
-function findUnitPrice(
+export function findUnitPrice(
 	accountType: string,
 	quantity: number,
 	pricingChart: any
