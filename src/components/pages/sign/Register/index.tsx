@@ -21,12 +21,12 @@ const Register: React.FC<{
 			}}
 		>
 			<DialogTitle className="flex flex-row items-center justify-between">
-				<h1 className="font-bold text-base">
+				<p className="font-bold text-base">
 					Register <br />{" "}
 					<span className="text-sm font-semibold text-slate-500">
 						New <span className="capitalize">{type} Account</span>
 					</span>
-				</h1>
+				</p>
 				<IconButton onClick={onClose}>
 					<Iconify icon="mdi:close" />
 				</IconButton>

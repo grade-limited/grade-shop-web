@@ -61,7 +61,7 @@ const EmployeeForm: React.FC<{ onClose: () => void }> = ({ onClose }) => {
 			content: "Registering Account..",
 			duration: 0,
 		});
-		const res = await handleResponse(() => mutateSignup(data));
+		const res = await handleResponse(() => mutateSignup(data), [201]);
 		message.destroy();
 		if (res.status) {
 			reset();
