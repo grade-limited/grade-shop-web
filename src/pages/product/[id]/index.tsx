@@ -8,8 +8,31 @@ import { getProductById, useGetProductById } from "@/queries/product";
 import Image from "next/image";
 import { previewImage } from "@/service";
 import React from "react";
-import { Breadcrumb, Tag } from "antd";
-import { Avatar } from "@mui/material";
+import { Breadcrumb, Tabs, Tag } from "antd";
+import { Avatar, Button } from "@mui/material";
+import Iconify from "@/components/iconify";
+
+type AccountEntry = { account_type: string; quantity: string };
+
+function getLowestQuantities(entries: AccountEntry[] = []): {
+	[accountType: string]: number;
+} {
+	const lowestQuantities: { [accountType: string]: number } = {};
+
+	entries?.forEach((entry) => {
+		const { account_type, quantity } = entry;
+		const currentQuantity = parseInt(quantity, 10);
+
+		if (
+			!(account_type in lowestQuantities) ||
+			currentQuantity < lowestQuantities[account_type]
+		) {
+			lowestQuantities[account_type] = currentQuantity;
+		}
+	});
+
+	return lowestQuantities;
+}
 
 const Product: React.FC<{ data: any }> = ({ data }) => {
 	const router = useRouter();
@@ -46,6 +69,11 @@ const Product: React.FC<{ data: any }> = ({ data }) => {
 			setThumbnail(images[0]);
 		}
 	}, [images, isFetchedAfterMount]);
+
+	console.log(
+		productData?.minimum_order_quantity,
+		getLowestQuantities(productData?.minimum_order_quantity as AccountEntry[])
+	);
 
 	return (
 		<>
@@ -132,7 +160,7 @@ const Product: React.FC<{ data: any }> = ({ data }) => {
 									)}
 									{!!productData?.brand && (
 										<Breadcrumb.Item href={`/brand/${productData?.brand?.id}`}>
-											{productData?.brand?.name}
+											{productData?.brand?.name} (Brand)
 										</Breadcrumb.Item>
 									)}
 								</Breadcrumb>
@@ -153,8 +181,89 @@ const Product: React.FC<{ data: any }> = ({ data }) => {
 							</p>
 						)}
 
+						<br />
+
+						<Tabs
+							defaultActiveKey="bb2e"
+							items={[
+								{
+									key: "bb2e",
+									label: "Personal Order",
+									children: (
+										<>
+											{/* Add to Cart Button */}
+											{productData?.minimum_order_quantity &&
+											getLowestQuantities(
+												productData?.minimum_order_quantity as AccountEntry[]
+											)?.["bb2e"] ? (
+												<p className="mt-2 text-base">
+													<span className="font-bold">
+														Minimum Order Quantity:
+													</span>
+													<span className="ml-2">
+														{
+															getLowestQuantities(
+																productData?.minimum_order_quantity as AccountEntry[]
+															)?.["bb2e"]
+														}
+													</span>
+												</p>
+											) : (
+												<></>
+											)}
+											<Button
+												variant="contained"
+												color="primary"
+												size="large"
+												className="mt-5 rounded-md bg-slate-700 hover:bg-slate-600"
+												startIcon={<Iconify icon={"fa-solid:cart-plus"} />}
+											>
+												Add to Cart
+											</Button>
+										</>
+									),
+								},
+								{
+									key: "b2b",
+									label: "Company Order",
+									children: (
+										<>
+											{/* Add to Cart Button */}
+											{productData?.minimum_order_quantity &&
+											getLowestQuantities(
+												productData?.minimum_order_quantity as AccountEntry[]
+											)?.["b2b"] ? (
+												<p className="mt-2 text-base">
+													<span className="font-bold">
+														Minimum Order Quantity:
+													</span>
+													<span className="ml-2">
+														{
+															getLowestQuantities(
+																productData?.minimum_order_quantity as AccountEntry[]
+															)?.["b2b"]
+														}
+													</span>
+												</p>
+											) : (
+												<></>
+											)}
+											<Button
+												variant="contained"
+												color="primary"
+												size="large"
+												className="mt-5 rounded-md bg-slate-700 hover:bg-slate-600"
+												startIcon={<Iconify icon={"fa-solid:cart-plus"} />}
+											>
+												Add to Cart
+											</Button>
+										</>
+									),
+								},
+							]}
+						/>
 						<div
-							className="text-justify max-w-md mt-2"
+							className="text-justify max-w-md mt-6"
 							dangerouslySetInnerHTML={{
 								__html: xss(productData?.description, {
 									// whiteList: {}, // empty, means filter out all tags
