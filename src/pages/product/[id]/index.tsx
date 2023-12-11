@@ -8,7 +8,8 @@ import { getProductById, useGetProductById } from "@/queries/product";
 import Image from "next/image";
 import { previewImage } from "@/service";
 import React from "react";
-import { Breadcrumb } from "antd";
+import { Breadcrumb, Tag } from "antd";
+import { Avatar } from "@mui/material";
 
 const Product: React.FC<{ data: any }> = ({ data }) => {
 	const router = useRouter();
@@ -17,21 +18,34 @@ const Product: React.FC<{ data: any }> = ({ data }) => {
 	const { t } = useTranslation("product");
 
 	const [thumbnail, setThumbnail] = React.useState<string | null>(null);
+	const [images, setImages] = React.useState<string[]>([]);
 
-	const { data: productData } = useGetProductById({
+	const { data: productData, isFetchedAfterMount } = useGetProductById({
 		id: parseInt(id as string),
 		initialData: data?.productById,
 		params: {},
 	});
 
-	React.useLayoutEffect(() => {
-		if (productData?.thumbnail_url) {
-			setThumbnail(previewImage(productData?.thumbnail_url));
+	React.useEffect(() => {
+		if (!productData) return;
+		if (productData?.attachments?.length) {
+			setImages(
+				[productData?.attachments]?.map((image: any) => previewImage(image))
+			);
 		}
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, []);
 
-	console.log(productData);
+		if (productData?.thumbnail_url && isFetchedAfterMount) {
+			setImages((prev) => [...prev, previewImage(productData?.thumbnail_url)]);
+		}
+
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [productData, isFetchedAfterMount]);
+
+	React.useEffect(() => {
+		if (images?.length) {
+			setThumbnail(images[0]);
+		}
+	}, [images, isFetchedAfterMount]);
 
 	return (
 		<>
@@ -58,22 +72,46 @@ const Product: React.FC<{ data: any }> = ({ data }) => {
 			</Head>
 			<main className="px-5 py-3">
 				<div className="flex flex-col lg:flex-row gap-4">
-					{thumbnail && (
-						<Image
-							src={thumbnail}
-							alt={productData?.name}
-							width={540}
-							height={820}
-							priority
-							style={{
-								position: "relative",
-								objectFit: "cover",
-								objectPosition: "center",
-								borderRadius: "6px",
-								maxWidth: "500px",
-							}}
-						/>
-					)}
+					<div>
+						{thumbnail && (
+							<Image
+								src={thumbnail}
+								alt={productData?.name}
+								width={540}
+								height={820}
+								priority
+								style={{
+									position: "relative",
+									objectFit: "cover",
+									objectPosition: "center",
+									borderRadius: "6px",
+									maxWidth: "500px",
+								}}
+							/>
+						)}
+						<div className="flex flex-row items-center gap-2 flex-wrap my-2">
+							{images?.map((i: string) => (
+								<Avatar
+									key={i}
+									src={i}
+									variant="rounded"
+									className={`border-2 ${
+										thumbnail === i
+											? "border-primary-200"
+											: "border-transparent"
+									}`}
+									sx={{
+										width: 60,
+										height: 60,
+										cursor: "pointer",
+									}}
+									onClick={() => {
+										setThumbnail(i);
+									}}
+								/>
+							))}
+						</div>
+					</div>
 					<div className="flex-1">
 						{!!productData?.category && (
 							<h2>
@@ -92,12 +130,27 @@ const Product: React.FC<{ data: any }> = ({ data }) => {
 											{productData?.category?.name}
 										</Breadcrumb.Item>
 									)}
+									{!!productData?.brand && (
+										<Breadcrumb.Item href={`/brand/${productData?.brand?.id}`}>
+											{productData?.brand?.name}
+										</Breadcrumb.Item>
+									)}
 								</Breadcrumb>
 							</h2>
 						)}
 						<h1 className="text-2xl font-bold my-2">{productData?.name}</h1>
+						<Tag color="#87d068">In Stock</Tag>
+						<p className="mt-3">
+							<span className="font-bold">SKU:</span>
+							<span className="ml-2">{productData?.sku}</span>
+						</p>
+						<p className="mt-2">
+							<span className="font-bold">Unit of Measure:</span>
+							<span className="ml-2">{productData?.unit_of_measure}</span>
+						</p>
+
 						<div
-							className="text-justify max-w-md"
+							className="text-justify max-w-md mt-2"
 							dangerouslySetInnerHTML={{
 								__html: xss(productData?.description, {
 									// whiteList: {}, // empty, means filter out all tags

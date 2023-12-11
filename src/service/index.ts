@@ -29,7 +29,8 @@ instance.interceptors.request.use((configuration) => {
 });
 
 export const previewImage = (fileName: string) => {
-	return `${rootURL}/files/${fileName}`;
+	console.log(fileName);
+	return fileName ? `${rootURL}/files/${fileName}` : "";
 };
 
 export default instance;

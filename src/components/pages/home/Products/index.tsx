@@ -56,11 +56,11 @@ const Products: React.FC<{ products: any[] }> = ({ products }) => {
 							<span className="text-sm text-slate-400">
 								{product?.brand?.name}
 							</span>
-							{!!product?.price?.length && (
+							{/* {!!product?.price?.length && (
 								<span className="text-sm text-slate-400">
 									&bull; {product?.price}
 								</span>
-							)}
+							)} */}
 							{/* {product?.actual_price && (
 								<span className="text-sm text-slate-400">
 									&bull; {product?.actual_price}
