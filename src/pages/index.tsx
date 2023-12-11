@@ -75,6 +75,10 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 		return {
 			props: {
 				notFound: true,
+				...(await serverSideTranslations(context.locale ?? "en", [
+					"common",
+					"home",
+				])),
 			},
 		};
 	}
