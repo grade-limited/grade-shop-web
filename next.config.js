@@ -8,6 +8,7 @@ const nextConfig = {
 	images: {
 		domains: [
 			"api.grade.tamslab.site",
+			"api.shop.gradebd.com",
 			"localhost", // LOCALHOST
 			"127.0.0.1", // LOCALHOST
 		],
