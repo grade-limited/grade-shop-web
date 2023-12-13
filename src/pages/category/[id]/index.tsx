@@ -87,9 +87,7 @@ const Category: React.FC<{ data: any }> = ({ data }) => {
 						}}
 					/>
 				)}
-				<h1 className="text-2xl font-bold mt-4 mb-2">
-					Category: {categoryData?.name}
-				</h1>
+				<h1 className="text-2xl font-bold mt-4 mb-2">{categoryData?.name}</h1>
 				<div
 					className="text-justify"
 					dangerouslySetInnerHTML={{

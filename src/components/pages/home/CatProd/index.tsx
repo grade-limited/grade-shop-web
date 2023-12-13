@@ -43,7 +43,7 @@ const CatProd: React.FC<{
 					View All
 				</Link>
 			</div>
-			<Products products={data?.products?.slice(0, 10) || []} />
+			<Products products={data?.products?.slice(0, 12) || []} />
 		</div>
 	) : (
 		<></>

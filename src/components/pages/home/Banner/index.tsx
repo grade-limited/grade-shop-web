@@ -45,7 +45,7 @@ const Banner: React.FC<{ banners: any[] }> = ({ banners }) => {
 											width: "100%",
 											aspectRatio: "820/360",
 											objectFit: "cover",
-											maxHeight: "480px",
+											// maxHeight: "480px",
 											objectPosition: "center",
 										},
 										"& div": {

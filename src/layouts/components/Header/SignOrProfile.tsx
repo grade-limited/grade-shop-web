@@ -19,7 +19,7 @@ const SignOrProfile: React.FC = () => {
 		<Link href={"/sign"}>
 			<Button
 				variant="contained"
-				className="bg-primary font-bold rounded-full hidden md:flex text-slate-800"
+				className="bg-primary font-bold rounded-full hidden md:flex text-white"
 			>
 				{t("HEADER.SIGN")}
 			</Button>

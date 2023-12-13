@@ -128,7 +128,7 @@ const Product: React.FC<{ data: any }> = ({ data }) => {
 					content="width=device-width, initial-scale=1"
 				/>
 			</Head>
-			<main className="px-5 py-3">
+			<main className="px-5 pb-24 pt-7">
 				<div className="flex flex-col lg:flex-row gap-4">
 					<div>
 						{thumbnail && (

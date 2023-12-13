@@ -1,7 +1,7 @@
 import Iconify from "@/components/iconify";
 import { previewImage } from "@/service";
 import { Avatar, Button, Typography } from "@mui/material";
-import { Badge, Empty } from "antd";
+import { Badge, Empty, Tag } from "antd";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
@@ -38,7 +38,7 @@ const Products: React.FC<{ products: any[] }> = ({ products }) => {
 				return (
 					<div
 						key={index}
-						className="border border-slate-300 rounded-xl p-2 relative h-fit"
+						className="flex flex-col border h-full border-slate-300 hover:border-primary-400 rounded-xl p-2 relative"
 					>
 						<Badge.Ribbon
 							text={
@@ -78,23 +78,19 @@ const Products: React.FC<{ products: any[] }> = ({ products }) => {
 								)}
 							</Link>
 						</Badge.Ribbon>
-						<div className="flex flex-col mt-2 h-14 p-1 relative">
-							<Link href={`/product/${product.id}`}>
-								<Typography
-									noWrap
-									className="font-bold"
-								>
+						<div className="flex-1 flex flex-col mt-2 min-h-14 p-1 relative">
+							<Link
+								href={`/product/${product.id}`}
+								className="flex-1"
+							>
+								<Typography className="text-center font-bold">
 									{product.name}
 								</Typography>
 							</Link>
-							<div>
-								<span className="text-sm text-slate-400">
-									{product?.brand?.name}
-								</span>
+							<div className="text-center">
 								{!!product?.price?.length && (
 									<span className="text-sm font-bold text-slate-700">
-										{" "}
-										&bull; {price}৳
+										{price}৳
 									</span>
 								)}
 								{!!product?.market_price && (
