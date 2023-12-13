@@ -38,7 +38,7 @@ export function findUnitPrice(
 	accountType: string,
 	quantity: number,
 	pricingChart: any
-): number | null {
+): number {
 	const priceInfo = pricingChart
 		.filter(
 			(item: any) =>
@@ -51,9 +51,9 @@ export function findUnitPrice(
 		});
 
 	if (!priceInfo?.length) {
-		console.error(
-			`No pricing information found for account type: ${accountType}`
-		);
+		// console.error(
+		// 	`No pricing information found for account type: ${accountType}`
+		// );
 		return parseInt(
 			pricingChart
 				.filter((item: any) => item.account_type === accountType)
