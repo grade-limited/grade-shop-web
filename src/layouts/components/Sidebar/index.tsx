@@ -34,7 +34,12 @@ const generateItem = ({
 	children,
 }: CategoryItem): MenuItem =>
 	getItem(
-		<Link href={`/category/${id}`}>{name}</Link>,
+		<Link
+			href={`/category/${id}`}
+			className="hover:text-primary-600"
+		>
+			{name}
+		</Link>,
 		id,
 		icon_url ? (
 			<Image
@@ -62,8 +67,8 @@ const Sidebar: React.FC = () => {
 				</div>
 			) : (
 				<Menu
-					defaultSelectedKeys={["1"]}
-					defaultOpenKeys={["sub1"]}
+					defaultSelectedKeys={[data?.[0]?.id?.toString() ?? ""]}
+					defaultOpenKeys={[data?.[0]?.id?.toString() ?? ""]}
 					mode={"inline"}
 					inlineCollapsed={false}
 					theme={"light"}

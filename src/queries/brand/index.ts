@@ -21,3 +21,27 @@ export const useGetBrands = ({
 		initialData: initialData,
 	});
 };
+
+// Validation function with instance
+export const getBrandById = (id: number, params?: any) => {
+	return instance.get(`/brands/${id}`, {
+		params,
+	});
+};
+
+export const useGetBrandById = ({
+	id,
+	initialData,
+	params,
+}: {
+	id: number;
+	initialData: any;
+	params: any;
+}) => {
+	return useQuery(["brand", id, params], () => getBrandById(id, params), {
+		enabled: !!id,
+		select: (data) => data?.data?.data || {},
+		placeholderData: initialData,
+		initialData: initialData,
+	});
+};
