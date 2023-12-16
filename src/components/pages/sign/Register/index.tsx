@@ -17,7 +17,7 @@ const Register: React.FC<{
 			open={open}
 			onClose={onClose}
 			PaperProps={{
-				className: "w-full max-w-xl rounded-lg",
+				className: "w-full max-w-3xl rounded-lg",
 			}}
 		>
 			<DialogTitle className="flex flex-row items-center justify-between">
@@ -32,7 +32,7 @@ const Register: React.FC<{
 				</IconButton>
 			</DialogTitle>
 			<Divider className="my-0" />
-			<DialogContent className="pb-2">
+			<DialogContent className="pb-2 px-0">
 				<div className="flex flex-row items-center justify-center">
 					<Segmented
 						value={type}
@@ -67,7 +67,7 @@ const Register: React.FC<{
 					{type === "employee" ? (
 						<EmployeeForm onClose={onClose} />
 					) : (
-						<OrganizationForm />
+						<OrganizationForm onClose={onClose} />
 					)}
 				</div>
 			</DialogContent>

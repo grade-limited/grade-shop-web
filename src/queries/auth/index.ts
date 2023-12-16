@@ -27,6 +27,18 @@ export const useSignup = () => {
 	return useMutation(signup);
 };
 
+// Sign Up function with instance
+const signupOrganization = (data: any) => {
+	return instance.post("/auth/signup", {
+		...data,
+		primary_contact: "phone",
+		registered_from: "Website",
+	});
+};
+export const useSignupOrganization = () => {
+	return useMutation(signupOrganization);
+};
+
 //Logout function with instance
 const logout = () => {
 	return instance.delete("/auth/signout");
