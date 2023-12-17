@@ -34,6 +34,16 @@ body {
 	}
 }
 
+/* Ant Design Message Over Everything  */
+.ant-message {
+	z-index: 1400;
+}
+.ant-picker-dropdown,
+.ant-select-dropdown {
+	z-index: 1400 !important;
+}
+
+
 ::-webkit-scrollbar-track {
 	background-color: #d5dce2;
 }
