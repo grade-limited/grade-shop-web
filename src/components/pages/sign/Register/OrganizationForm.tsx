@@ -10,26 +10,6 @@ const OrganizationForm: React.FC<{ onClose: () => void }> = ({ onClose }) => {
 	const { handleSubmit, control, reset } = useForm({
 		// resolver: joiResolver(resolver),
 	});
-	const steps = [
-		{
-			title: "Details",
-			description: "Information",
-			content: "First-content",
-			icon: <Iconify icon="gg:organisation" />,
-		},
-		{
-			title: "Type",
-			description: "Type/Sub-type",
-			content: "Second-content",
-			icon: <Iconify icon="fluent-mdl2:org" />,
-		},
-		{
-			title: "Contact Info",
-			description: "Personal",
-			content: "Last-content",
-			icon: <Iconify icon="ic:round-contact-phone" />,
-		},
-	];
 
 	const [current, setCurrent] = React.useState(0);
 
@@ -40,13 +20,6 @@ const OrganizationForm: React.FC<{ onClose: () => void }> = ({ onClose }) => {
 	const prev = () => {
 		setCurrent(current - 1);
 	};
-
-	const items = steps.map((item) => ({
-		key: item.title,
-		title: item.title,
-		subTitle: item.description,
-		icon: item.icon,
-	}));
 
 	const { mutateAsync: mutateSignup, isLoading: isSignupLoading } =
 		useSignupOrganization();
@@ -68,6 +41,33 @@ const OrganizationForm: React.FC<{ onClose: () => void }> = ({ onClose }) => {
 		}
 	};
 
+	const steps = [
+		{
+			title: "Details",
+			description: "Information",
+			content: "First-content",
+			icon: <Iconify icon="gg:organisation" />,
+		},
+		{
+			title: "Type",
+			description: "Type/Sub-type",
+			content: "Second-content",
+			icon: <Iconify icon="fluent-mdl2:org" />,
+		},
+		{
+			title: "Contact Info",
+			description: "Personal",
+			content: "Last-content",
+			icon: <Iconify icon="ic:round-contact-phone" />,
+		},
+	];
+
+	const items = steps.map((item) => ({
+		key: item.title,
+		title: item.title,
+		subTitle: item.description,
+		icon: item.icon,
+	}));
 	return (
 		<>
 			<form onSubmit={handleSubmit(onSubmit)}>

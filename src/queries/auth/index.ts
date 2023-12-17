@@ -29,10 +29,8 @@ export const useSignup = () => {
 
 // Sign Up function with instance
 const signupOrganization = (data: any) => {
-	return instance.post("/auth/signup", {
+	return instance.post("/requests", {
 		...data,
-		primary_contact: "phone",
-		registered_from: "Website",
 	});
 };
 export const useSignupOrganization = () => {
