@@ -17,8 +17,9 @@ const Register: React.FC<{
 			open={open}
 			onClose={onClose}
 			PaperProps={{
-				className: "w-full max-w-3xl rounded-lg",
+				className: "w-full max-w-xl rounded-lg",
 			}}
+			scroll="body"
 		>
 			<DialogTitle className="flex flex-row items-center justify-between">
 				<p className="font-bold text-base">

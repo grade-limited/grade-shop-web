@@ -71,7 +71,7 @@ const EmployeeForm: React.FC<{ onClose: () => void }> = ({ onClose }) => {
 		<>
 			<form
 				onSubmit={handleSubmit(onSubmit)}
-				className="max-w-xl mb-4 mx-auto flex flex-col gap-2 px-3"
+				className="max-w-xl mb-4 flex flex-col gap-2 px-3 mx-auto"
 			>
 				<div>
 					<Label isRequired>Full Name</Label>
