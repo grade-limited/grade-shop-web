@@ -102,8 +102,8 @@ const OrganizationForm: React.FC<{ onClose: () => void }> = ({ onClose }) => {
 	const { handleSubmit, control, reset, getValues } = useForm({
 		resolver: joiResolver(resolver),
 		defaultValues: {
-			organization_name: "",
-			businessType: [],
+			organization_name: undefined,
+			businessType: undefined,
 			contact_address: undefined,
 			contact_number: undefined,
 			contact_email: undefined,
