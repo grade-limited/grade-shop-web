@@ -5,28 +5,7 @@ import { message } from "@/components/antd/message";
 
 export const useAuth = () => {
 	const [token, setToken] = useState<string | null>(authService.getToken());
-	const [user, setUser] = useState({
-		id: 0,
-		first_name: "",
-		last_name: "",
-		email: "",
-		phone: "",
-		username: "",
-		gender: "Male",
-		display_picture: "",
-		dob: "",
-		address: "",
-		referral_code: "",
-		referred_by_id: 0,
-		max_session: 10,
-		is_active: true,
-		phone_verified_at: null,
-		email_verified_at: null,
-		registered_from: "Website",
-		created_at: null,
-		updated_at: null,
-		deleted_at: null,
-	});
+	const [user, setUser] = useState<IUser | null>(null);
 
 	useEffect(() => {
 		const unsubscribe = authService.listen((v) => {
@@ -67,10 +46,36 @@ export const useAuth = () => {
 		setUser(validationData?.data);
 	}, [validationData]);
 
+	console.log(user);
+
 	return {
 		token,
 		user,
 		isValidationLoading,
 		isAuthenticated: !!token,
 	};
+};
+
+export type IUser = {
+	id: number;
+	first_name: string;
+	last_name: string;
+	email?: string;
+	phone?: string;
+	username: string;
+	gender: "Male" | "Female" | "Non-Binary";
+	display_picture?: string;
+	organizations: any[];
+	dob?: string;
+	address?: string;
+	referral_code: string;
+	referred_by_id?: number;
+	max_session: number;
+	is_active: boolean;
+	phone_verified_at?: string;
+	email_verified_at?: string;
+	registered_from: string;
+	created_at?: string;
+	updated_at?: string;
+	deleted_at?: string;
 };

@@ -28,7 +28,7 @@ const Brands: React.FC<{
 								/>
 							</Link>
 						) : (
-							<></>
+							<React.Fragment key={index}></React.Fragment>
 						)
 					)}
 				</div>

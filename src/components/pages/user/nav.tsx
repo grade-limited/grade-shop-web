@@ -80,6 +80,19 @@ const UserNav: React.FC<{ children?: React.ReactNode; drawer?: boolean }> = ({
 		// 	key: "saved",
 		// 	href: "/user/saved-products",
 		// },
+		{
+			title: (
+				<>
+					<InlineIcon
+						icon={"icons8:organization"}
+						className="text-xl"
+					/>{" "}
+					Organization
+				</>
+			),
+			key: "org",
+			href: "/user/my-organization",
+		},
 	];
 	const router = useRouter();
 	return (
@@ -94,8 +107,11 @@ const UserNav: React.FC<{ children?: React.ReactNode; drawer?: boolean }> = ({
 					<h1 className="font-bold">
 						{[user?.first_name || "", user?.last_name || ""]?.join(" ")}
 					</h1>
-					<h2 className="font-bold text-sm text-slate-500">
+					<h2 className="font-semibold text-sm text-slate-600">
 						@{user?.username}
+					</h2>
+					<h2 className="text-sm text-slate-500">
+						{user?.organizations?.[0]?.name}
 					</h2>
 					{/* <div className="flex flex-row items-center gap-2 text-slate-600 text-sm mt-1 font-semibold">
 						<InlineIcon

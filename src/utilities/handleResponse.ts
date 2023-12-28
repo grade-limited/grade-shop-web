@@ -37,7 +37,9 @@ const handleResponse = async (
 			if (err.response.status === 401)
 				return {
 					status: false,
-					message: err.response.data || "Unverified to complete the task",
+					message:
+						err.response.data?.message || "Unverified to complete the task",
+					data: err.response.data,
 				};
 			else {
 				return {
