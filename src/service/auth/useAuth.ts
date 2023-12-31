@@ -46,8 +46,6 @@ export const useAuth = () => {
 		setUser(validationData?.data);
 	}, [validationData]);
 
-	console.log(user);
-
 	return {
 		token,
 		user,

@@ -1,5 +1,5 @@
 import useUser from "@/hooks/useUser";
-import { authService } from "@/service/auth";
+import { authService, useAuth } from "@/service/auth";
 import { InlineIcon } from "@iconify/react";
 import { Divider } from "@mui/material";
 import Link from "next/link";
@@ -95,7 +95,11 @@ const UserNav: React.FC<{ children?: React.ReactNode; drawer?: boolean }> = ({
 		},
 	];
 	const router = useRouter();
-	return (
+	const { isValidationLoading } = useAuth();
+
+	return isValidationLoading ? (
+		<main></main>
+	) : (
 		<main className="flex flex-row gap-2">
 			{!drawer && <div className="flex-1 min-h-[70vh]">{children}</div>}
 			<aside
