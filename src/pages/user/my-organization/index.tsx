@@ -8,8 +8,6 @@ import React from "react";
 const MyOrganization: React.FC = () => {
 	const user = useUser();
 
-	console.log(user);
-
 	return (
 		<UserNav>
 			{!!user?.organizations?.length ? (

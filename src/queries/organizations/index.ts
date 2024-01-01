@@ -1,5 +1,5 @@
 import instance from "@/service";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 //Get All
 const getOrganizations = (params: any) => {
@@ -27,5 +27,16 @@ export const useGetOrganizationsById = (id?: string) => {
 		select(data) {
 			return data.data.data;
 		},
+	});
+};
+
+const createEmployeeship = (data: any) => {
+	return instance.post("/employeeships", data);
+};
+
+export const useCreateEmployeeship = () => {
+	const queryClient = useQueryClient();
+	return useMutation(createEmployeeship, {
+		onSuccess: () => queryClient.invalidateQueries(["validate"]),
 	});
 };

@@ -226,8 +226,8 @@ const OrganizationForm: React.FC<{ onClose: () => void }> = ({ onClose }) => {
 					label: "Educational",
 				},
 				{
-					value: "others",
-					label: "others",
+					value: "Others",
+					label: "Others",
 				},
 			],
 		},
