@@ -101,7 +101,7 @@ const UserNav: React.FC<{ children?: React.ReactNode; drawer?: boolean }> = ({
 		<main></main>
 	) : (
 		<main className="flex flex-row gap-2">
-			{!drawer && <div className="flex-1 min-h-[70vh]">{children}</div>}
+			{!drawer && <div className="flex-1 min-h-[70vh] px-2">{children}</div>}
 			<aside
 				className={`${
 					!drawer ? "grow-0 hidden sm:flex border-l-2" : " flex-1"
