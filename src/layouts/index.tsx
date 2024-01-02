@@ -11,6 +11,7 @@ import { onMessageListener, requestToken } from "@/config/fcm";
 import { IUserId } from "@/types";
 import { notification } from "antd";
 import Sidebar from "./components/Sidebar";
+import { Cart } from "./components";
 
 const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
 	const { mutateAsync: registerNotification } = useRegisterDevice();
@@ -65,6 +66,7 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
 					<Footer />
 				</section>
 			</section>
+			<Cart />
 		</div>
 	);
 };

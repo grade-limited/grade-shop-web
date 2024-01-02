@@ -172,4 +172,4 @@ const UserNav: React.FC<{ children?: React.ReactNode; drawer?: boolean }> = ({
 	);
 };
 
-export default UserNav;
+export default React.memo(UserNav);
