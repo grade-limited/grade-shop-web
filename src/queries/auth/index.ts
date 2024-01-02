@@ -31,6 +31,7 @@ export const useSignup = () => {
 const signupOrganization = (data: any) => {
 	return instance.post("/requests", {
 		...data,
+		registered_from: "Website",
 	});
 };
 export const useSignupOrganization = () => {

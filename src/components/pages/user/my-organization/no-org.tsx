@@ -47,29 +47,7 @@ const NoOrg = () => {
 	}, [search]);
 
 	const [selected, setSelected] = React.useState<any>(null);
-	const { handleSubmit, control, reset, getValues } = useForm({
-		// resolver: joiResolver(resolver),
-		// defaultValues: {
-		// 	organization_name: undefined,
-		// 	businessType: undefined,
-		// 	contact_address: undefined,
-		// 	contact_number: undefined,
-		// 	contact_email: undefined,
-		// 	facebook_url: undefined,
-		// 	website_url: undefined,
-		// 	linkedin_url: undefined,
-		// 	instagram_url: undefined,
-		// 	contact_person_name: undefined,
-		// 	contact_person_phone: undefined,
-		// 	contact_person_address: undefined,
-		// 	contact_person_employee_id: undefined,
-		// 	contact_person_dept: undefined,
-		// 	contact_person_designation: undefined,
-		// 	contact_person_branch: undefined,
-		// 	contact_person_desk_information: undefined,
-		// 	contact_person_business_unit: undefined,
-		// },
-	});
+	const { handleSubmit, control, reset } = useForm();
 
 	const { mutateAsync, isLoading } = useCreateEmployeeship();
 

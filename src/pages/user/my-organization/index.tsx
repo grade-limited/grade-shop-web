@@ -1,4 +1,5 @@
 import NoOrg from "@/components/pages/user/my-organization/no-org";
+import Org from "@/components/pages/user/my-organization/org";
 import UserNav from "@/components/pages/user/nav";
 import { withAuth } from "@/hoc/auth";
 import useUser from "@/hooks/useUser";
@@ -11,7 +12,9 @@ const MyOrganization: React.FC = () => {
 	return (
 		<UserNav>
 			{!!user?.organizations?.length ? (
-				<></>
+				<>
+					<Org />
+				</>
 			) : (
 				<>
 					<NoOrg />

@@ -80,6 +80,7 @@ const UserNav: React.FC<{ children?: React.ReactNode; drawer?: boolean }> = ({
 		// 	key: "saved",
 		// 	href: "/user/saved-products",
 		// },
+
 		{
 			title: (
 				<>
@@ -105,18 +106,24 @@ const UserNav: React.FC<{ children?: React.ReactNode; drawer?: boolean }> = ({
 			<aside
 				className={`${
 					!drawer ? "grow-0 hidden sm:flex border-l-2" : " flex-1"
-				} flex-col gap-1`}
+				} flex-col gap-1 max-w-[280px]`}
 			>
 				<div className="p-3 px-5 bg-slate-200 rounded-md m-2">
 					<h1 className="font-bold">
 						{[user?.first_name || "", user?.last_name || ""]?.join(" ")}
 					</h1>
-					<h2 className="font-semibold text-sm text-slate-600">
-						@{user?.username}
-					</h2>
-					<h2 className="text-sm text-slate-500">
-						{user?.organizations?.[0]?.name}
-					</h2>
+					{user?.organizations?.[0] ? (
+						<h2 className="text-sm text-slate-500">
+							<Link href={"/user/my-organization"}>
+								{user?.organizations?.[0]?.Employeeship?.designation},{" "}
+								{user?.organizations?.[0]?.name}
+							</Link>
+						</h2>
+					) : (
+						<h2 className="font-semibold text-xs text-slate-600">
+							{user?.phone || user?.email}
+						</h2>
+					)}
 					{/* <div className="flex flex-row items-center gap-2 text-slate-600 text-sm mt-1 font-semibold">
 						<InlineIcon
 							icon={"ph:coins-duotone"}
