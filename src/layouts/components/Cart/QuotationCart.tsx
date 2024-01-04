@@ -27,8 +27,6 @@ import handleResponse from "@/utilities/handleResponse";
 const QuotationCart: React.FC = () => {
   const { data, isLoading } = useGetQuoteCarts();
 
-  console.log(data);
-
   //delete function
   const { mutateAsync: DeleteQoute, isLoading: isDeleteLoading } =
     useDeleteQuoteCart();
