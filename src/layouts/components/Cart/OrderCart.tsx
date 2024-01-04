@@ -10,15 +10,15 @@ import { previewImage } from "@/service";
 import handleResponse from "@/utilities/handleResponse";
 import {
   Avatar,
+  Button,
   IconButton,
   List,
   ListItem,
   ListItemAvatar,
-  ListItemButton,
   ListItemSecondaryAction,
   ListItemText,
 } from "@mui/material";
-import { Empty, Skeleton } from "antd";
+import { Divider, Empty, Skeleton } from "antd";
 import React from "react";
 
 const OrderCart: React.FC = () => {
@@ -68,7 +68,7 @@ const OrderCart: React.FC = () => {
     }
   };
   return (
-    <>
+    <div className="min-h-[85vh] pb-3 flex flex-col">
       <List dense className="flex-1 p-0 m-0">
         {isLoading ? (
           <Skeleton />
@@ -147,7 +147,42 @@ const OrderCart: React.FC = () => {
           />
         )}
       </List>
-    </>
+
+      <div className="mt-auto">
+        <Divider className="my-0" />
+        <div className="flex flex-row items-center justify-between p-4">
+          <p>Total</p>
+          <p className="font-semibold">
+            {!!data?.length
+              ? data
+                  ?.map?.(
+                    (item: any) =>
+                      findUnitPrice(
+                        "bb2e",
+                        item.quantity,
+                        item.product?.price
+                      ) * item.quantity
+                  )
+                  ?.reduce?.((x: number, y: number) => x + y) || 0
+              : 0}
+            ৳
+          </p>
+        </div>
+        <Button
+          variant="contained"
+          color="primary"
+          size="large"
+          disabled={isCartUpdating}
+          className="mt-1 rounded-md w-full bg-slate-700 hover:bg-slate-600"
+          startIcon={
+            <Iconify icon={"material-symbols:shopping-cart-checkout"} />
+          }
+          // onClick={onSubmit}
+        >
+          Proceed to Checkout
+        </Button>
+      </div>
+    </div>
   );
 };
 

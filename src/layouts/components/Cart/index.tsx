@@ -80,7 +80,7 @@ const Cart: React.FC = () => {
           ]}
         />
 
-        <Divider className="my-0" />
+        {/* <Divider className="my-0" />
         <div className="flex flex-row items-center justify-between p-4">
           <p>Total</p>
           <p className="font-semibold">
@@ -93,7 +93,7 @@ const Cart: React.FC = () => {
               : 0}
             ৳
           </p>
-        </div>
+        </div> */}
       </Drawer>
     </div>
   );
