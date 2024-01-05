@@ -14,7 +14,7 @@ const Cart: React.FC = () => {
   const { data, isLoading } = useGetCarts();
   const { isAuthenticated, isValidationLoading } = useAuth();
   const { state, toggleState } = useToggle(false);
-
+  console.log(data);
   if (isLoading || !isAuthenticated || isValidationLoading) return null;
 
   return (
@@ -34,12 +34,13 @@ const Cart: React.FC = () => {
           <p className="font-semibold">
             {!!data?.length
               ? data
-                  ?.map?.((item: any) =>
-                    findUnitPrice(
-                      "bb2e",
-                      item.quanitty,
-                      item.product?.price || []
-                    )
+                  ?.map?.(
+                    (item: any) =>
+                      findUnitPrice(
+                        "bb2e",
+                        item.quantity,
+                        item.product?.price || []
+                      ) * item.quantity
                   )
                   ?.reduce?.((x: number, y: number) => x + y) || 0
               : 0}
