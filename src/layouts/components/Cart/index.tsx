@@ -9,14 +9,16 @@ import { useToggle } from "@tam11a/react-use-hooks";
 import { Icon } from "@iconify/react";
 import { Divider, Tabs } from "antd";
 import QuotationCart from "./QuotationCart";
+import { useGetQuoteCarts } from "@/queries/cart/quote";
 
 const Cart: React.FC = () => {
   const { data, isLoading } = useGetCarts();
+  const { data: quoteData, isLoading: isQuoteLoading } = useGetQuoteCarts();
   const { isAuthenticated, isValidationLoading } = useAuth();
   const { state, toggleState } = useToggle(false);
-  console.log(data);
-  if (isLoading || !isAuthenticated || isValidationLoading) return null;
-
+  const [cartType, setCartType]= React.useState<any>("bb2e")
+  console.log(cartType);
+  if (isLoading || isQuoteLoading || !isAuthenticated || isValidationLoading) return null;
   return (
     <div>
       <div
@@ -29,7 +31,8 @@ const Cart: React.FC = () => {
         />
         <div className="text-white">
           <p className="text-center text-slate-400 text-sm">
-            Cart {!!data?.length && <>({data?.length})</>}
+            Cart {!!data?.length && (data?.length)}
+            
           </p>
           <p className="font-semibold">
             {!!data?.length
@@ -58,7 +61,25 @@ const Cart: React.FC = () => {
         }}
       >
         <DialogTitle className="flex flex-row items-center justify-between">
-          <p>Cart {!!data?.length && <>({data?.length})</>}</p>
+          <p>Cart 
+            {cartType === "bb2e" ?
+              <>
+              (
+                {
+                  !!data?.length && <>{data?.length}</>
+                }
+              )
+              </>
+              :
+              <>
+              (
+               {
+                  !!quoteData?.length && <>{quoteData ?.length}</>
+                }
+              )
+              </>
+            }
+          </p>
           <IconButton onClick={toggleState}>
             <Icon icon={"mdi:close"} />
           </IconButton>
@@ -67,6 +88,7 @@ const Cart: React.FC = () => {
         <Tabs
           defaultActiveKey="bb2e"
           className="flex-1 px-4"
+          onChange={(e)=> setCartType(e)}
           items={[
             {
               key: "bb2e",
