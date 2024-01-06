@@ -81,7 +81,7 @@ const Cart: React.FC = () => {
             {
               key: "bb2e",
               label: "Personal",
-              children: <OrderCart />,
+              children: <OrderCart toggleState={toggleState} />,
             },
             {
               key: "b2b",

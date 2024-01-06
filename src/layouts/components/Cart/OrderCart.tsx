@@ -19,9 +19,10 @@ import {
   ListItemText,
 } from "@mui/material";
 import { Divider, Empty, Skeleton } from "antd";
+import Link from "next/link";
 import React from "react";
 
-const OrderCart: React.FC = () => {
+const OrderCart: React.FC<{ toggleState: () => void }> = ({ toggleState }) => {
   const { data, isLoading } = useGetCarts();
 
   const { mutateAsync: Delete, isLoading: isDeleteLoading } = useDeleteCart();
@@ -168,19 +169,21 @@ const OrderCart: React.FC = () => {
             ৳
           </p>
         </div>
-        <Button
-          variant="contained"
-          color="primary"
-          size="large"
-          disabled={isCartUpdating}
-          className="mt-1 rounded-md w-full bg-slate-700 hover:bg-slate-600"
-          startIcon={
-            <Iconify icon={"material-symbols:shopping-cart-checkout"} />
-          }
-          // onClick={onSubmit}
-        >
-          Proceed to Checkout
-        </Button>
+        <Link href={"/checkout/order"}>
+          <Button
+            variant="contained"
+            color="primary"
+            size="large"
+            disabled={isCartUpdating}
+            className="mt-1 rounded-md w-full bg-slate-700 hover:bg-slate-600"
+            startIcon={
+              <Iconify icon={"material-symbols:shopping-cart-checkout"} />
+            }
+            onClick={toggleState}
+          >
+            Proceed to Checkout
+          </Button>
+        </Link>
       </div>
     </div>
   );
