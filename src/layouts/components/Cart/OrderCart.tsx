@@ -31,13 +31,11 @@ const OrderCart: React.FC<{ toggleState: () => void }> = ({ toggleState }) => {
     message.open({
       type: "loading",
       content: "Deleting Product from Cart..",
-
       duration: 0,
     });
+
     const res = await handleResponse(() => Delete(id));
-
     message.destroy();
-
     if (res.status) {
       message.success(res.message);
       return true;

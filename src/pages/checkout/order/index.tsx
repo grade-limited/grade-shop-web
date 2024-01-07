@@ -3,7 +3,7 @@ import ErrorSuffix from "@/components/antd/ErrorSuffix";
 import { message } from "@/components/antd/message";
 import Iconify from "@/components/iconify";
 import { findUnitPrice } from "@/pages/product/[id]";
-import { useGetCarts } from "@/queries/cart";
+import { useDeleteCart, useGetCarts } from "@/queries/cart";
 import { useCreateOrder } from "@/queries/checkout";
 import { previewImage } from "@/service";
 import handleResponse from "@/utilities/handleResponse";
@@ -87,12 +87,35 @@ const order: React.FC = () => {
     message.destroy();
     if (res.status) {
       reset();
+      // onDelete(orderData?.id); got some problems
       message.success(res.message);
     } else {
       message.error(res.message);
     }
   };
 
+  //Cart Delete Section
+
+  const { mutateAsync: Delete, isLoading: isDeleteLoading } = useDeleteCart();
+
+  const onDelete = async (id: number) => {
+    message.open({
+      type: "loading",
+      content: "Deleting Product from Cart..",
+      duration: 0,
+    });
+    const res = await handleResponse(() => Delete(id));
+
+    message.destroy();
+
+    if (res.status) {
+      message.success(res.message);
+      return true;
+    } else {
+      message.error(res.message);
+      return false;
+    }
+  };
   return (
     <div className="m-6 flex flex-col">
       <p className="font-medium text-2xl my-2">Shopping Cart</p>
