@@ -3,7 +3,7 @@ import ErrorSuffix from "@/components/antd/ErrorSuffix";
 import { message } from "@/components/antd/message";
 import Iconify from "@/components/iconify";
 import { findUnitPrice } from "@/pages/product/[id]";
-import { useDeleteCart, useGetCarts } from "@/queries/cart";
+import { useGetCarts } from "@/queries/cart";
 import { useCreateOrder } from "@/queries/checkout";
 import { previewImage } from "@/service";
 import handleResponse from "@/utilities/handleResponse";
