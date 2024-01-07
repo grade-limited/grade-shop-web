@@ -96,26 +96,26 @@ const order: React.FC = () => {
 
   //Cart Delete Section
 
-  const { mutateAsync: Delete, isLoading: isDeleteLoading } = useDeleteCart();
+  // const { mutateAsync: Delete, isLoading: isDeleteLoading } = useDeleteCart();
 
-  const onDelete = async (id: number) => {
-    message.open({
-      type: "loading",
-      content: "Deleting Product from Cart..",
-      duration: 0,
-    });
-    const res = await handleResponse(() => Delete(id));
+  // const onDelete = async (id: number) => {
+  //   message.open({
+  //     type: "loading",
+  //     content: "Deleting Product from Cart..",
+  //     duration: 0,
+  //   });
+  //   const res = await handleResponse(() => Delete(id));
 
-    message.destroy();
+  //   message.destroy();
 
-    if (res.status) {
-      message.success(res.message);
-      return true;
-    } else {
-      message.error(res.message);
-      return false;
-    }
-  };
+  //   if (res.status) {
+  //     message.success(res.message);
+  //     return true;
+  //   } else {
+  //     message.error(res.message);
+  //     return false;
+  //   }
+  // };
   return (
     <div className="m-6 flex flex-col">
       <p className="font-medium text-2xl my-2">Shopping Cart</p>
