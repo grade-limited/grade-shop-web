@@ -14,7 +14,6 @@ import {
   List,
   ListItem,
   ListItemAvatar,
-  ListItemSecondaryAction,
   ListItemText,
 } from "@mui/material";
 import { Divider, Empty, Input, Skeleton } from "antd";
@@ -22,7 +21,6 @@ import Joi from "joi";
 import { GetServerSideProps } from "next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import Link from "next/link";
-import { useRouter } from "next/router";
 import React from "react";
 import { Controller, useForm } from "react-hook-form";
 
@@ -50,27 +48,14 @@ const order: React.FC = () => {
     recipient_address: Joi.string().label("Recipient Addess").trim(),
   });
 
-  const {
-    // reset,
-    handleSubmit,
-    control,
-    reset,
-    // watch,
-    // setValue,
-  } = useForm({
+  const { handleSubmit, control, reset } = useForm({
     resolver: joiResolver(loginResolver),
-    // defaultValues: {
-    //   recipient_name: "",
-    //   recipient_number: "",
-    //   recipient_email: "",
-    //   recipient_address: "",
-    // },
   });
 
   //Order Submit Section
   const { mutateAsync: create, isLoading: orderCreating } = useCreateOrder();
 
-  // On Submit Function
+  /* On Submit Function */
   const onSubmit = async (data: any) => {
     message.open({
       type: "loading",
@@ -126,24 +111,6 @@ const order: React.FC = () => {
         <p className="text-center text-sm font-semibold">Total</p>
       </div>
       <div className="my-2 py-2 bg-white rounded ">
-        {/* {!!orderData?.length
-          ? orderData?.map?.((item: any) => (
-              <div className="grid grid-cols-5 ">
-                <Avatar
-                  variant="rounded"
-                  className="border-slate-200 border h-24 w-24 bg-slate-200 text-slate-600 grid-cols-1"
-                  src={previewImage(item.product.thumbnail_url)}
-                >
-                  <Iconify icon={"solar:album-broken"} />
-                </Avatar>
-                <div className="grid-cols-2">
-                  <p className="font-semibold text-lg mb-1">
-                    {item?.product?.name}
-                  </p>
-                </div>
-              </div>
-            ))
-          : ""} */}
         <List dense className="p-0 m-0">
           {isLoading ? (
             <Skeleton className="p-2" />
@@ -287,7 +254,6 @@ const order: React.FC = () => {
                     placeholder={"Recipient Name"}
                     size={"large"}
                     onChange={onChange}
-                    // className="rounded-full"
                     onBlur={onBlur}
                     value={value}
                     status={error ? "error" : ""}
@@ -310,7 +276,6 @@ const order: React.FC = () => {
                     placeholder={"Recipient Phone Number"}
                     size={"large"}
                     onChange={onChange}
-                    // className="rounded-full"
                     onBlur={onBlur}
                     value={value}
                     status={error ? "error" : ""}
@@ -333,7 +298,6 @@ const order: React.FC = () => {
                     placeholder={"Recipient Email"}
                     size={"large"}
                     onChange={onChange}
-                    // className="rounded-full"
                     onBlur={onBlur}
                     value={value}
                     status={error ? "error" : ""}
@@ -356,11 +320,9 @@ const order: React.FC = () => {
                     placeholder={"Recipient Address.."}
                     size={"large"}
                     onChange={onChange}
-                    // className="rounded-full"
                     onBlur={onBlur}
                     value={value}
                     status={error ? "error" : ""}
-                    // suffix={<ErrorSuffix error={error} />}
                   />
                 )}
               />
@@ -374,7 +336,7 @@ const order: React.FC = () => {
             size="large"
             disabled={orderCreating}
             type="submit"
-            className="mt-1 rounded-md bg-slate-700 hover:bg-slate-600"
+            className="rounded-md bg-slate-700 hover:bg-slate-600"
           >
             Confirm Order
           </Button>
@@ -383,47 +345,13 @@ const order: React.FC = () => {
               variant="text"
               size="large"
               disabled={orderCreating}
-              className="mt-1 text-slate-700 underline"
+              className="mx-2 text-slate-700 underline hover:text-slate-500 hover:bg-transparent"
             >
               Continue Shopping
             </Button>
           </Link>
         </div>
       </form>
-      {/* <div className="mt-auto">
-    <Divider className="my-0" />
-    <div className="flex flex-row items-center justify-between p-4">
-      <p>Total</p>
-      <p className="font-semibold">
-        {!!data?.length
-          ? data
-              ?.map?.(
-                (item: any) =>
-                  findUnitPrice(
-                    "bb2e",
-                    item.quantity,
-                    item.product?.price
-                  ) * item.quantity
-              )
-              ?.reduce?.((x: number, y: number) => x + y) || 0
-          : 0}
-        ৳
-      </p>
-    </div>
-    <Button
-      variant="contained"
-      color="primary"
-      size="large"
-      disabled={isCartUpdating}
-      className="mt-1 rounded-md w-full bg-slate-700 hover:bg-slate-600"
-      startIcon={
-        <Iconify icon={"material-symbols:shopping-cart-checkout"} />
-      }
-      // onClick={onSubmit}
-    >
-      Proceed to Checkout
-    </Button>
-  </div> */}
     </div>
   );
 };
