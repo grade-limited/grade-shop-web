@@ -12,11 +12,15 @@ import QuotationCart from "./QuotationCart";
 import { useGetQuoteCarts } from "@/queries/cart/quote";
 
 const Cart: React.FC = () => {
-  const { data, isLoading } = useGetCarts();
-  const { data: quoteData, isLoading: isQuoteLoading } = useGetQuoteCarts();
-  const { isAuthenticated, isValidationLoading } = useAuth();
+  //Fetch Data Section
+  const { data, isLoading } = useGetCarts(); //Cart Data Fetched
+  const { data: quoteData, isLoading: isQuoteLoading } = useGetQuoteCarts(); //Quotation Data Fetched
+  const { isAuthenticated, isValidationLoading } = useAuth(); //Authentication Data Fetched
+
+  //States for data management
   const { state, toggleState } = useToggle(false);
   const [cartType, setCartType] = React.useState<any>("bb2e");
+
   if (isLoading || isQuoteLoading || !isAuthenticated || isValidationLoading)
     return null;
   return (
@@ -90,21 +94,6 @@ const Cart: React.FC = () => {
             },
           ]}
         />
-
-        {/* <Divider className="my-0" />
-        <div className="flex flex-row items-center justify-between p-4">
-          <p>Total</p>
-          <p className="font-semibold">
-            {!!data?.length
-              ? data
-                  ?.map?.((item: any) =>
-                    findUnitPrice("bb2e", item.quanitty, item.product?.price)
-                  )
-                  ?.reduce?.((x: number, y: number) => x + y) || 0
-              : 0}
-            ৳
-          </p>
-        </div> */}
       </Drawer>
     </div>
   );
