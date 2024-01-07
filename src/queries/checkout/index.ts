@@ -1,8 +1,8 @@
 // Note: Cart Query
 
 import instance from "@/service";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { ICreateOrder } from "./types";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { ICreateOrder, ICreateQuotation } from "./types";
 
 //Create Order
 const createOrder = (data: ICreateOrder) => {
@@ -13,5 +13,17 @@ export const useCreateOrder = () => {
   const queryClient = useQueryClient();
   return useMutation(createOrder, {
     onSuccess: () => queryClient.invalidateQueries(["/orders"]),
+  });
+};
+
+//Create Quotation
+const createQuotation = (data: ICreateQuotation) => {
+  return instance.post("/quotations", data);
+};
+
+export const useCreateQuotation = () => {
+  const queryClient = useQueryClient();
+  return useMutation(createQuotation, {
+    onSuccess: () => queryClient.invalidateQueries(["/quotations"]),
   });
 };

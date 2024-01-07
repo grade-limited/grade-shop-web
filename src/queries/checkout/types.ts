@@ -8,3 +8,11 @@ export type ICreateOrder = {
   delivery_fee: number;
   discount: number;
 };
+export type ICreateQuotation = {
+  product_list: string[];
+  registered_from: string;
+  contact_name: string;
+  contact_number: string;
+  contact_email: string;
+  contact_designation: string;
+};
