@@ -18,7 +18,7 @@ function App({ Component, pageProps }: AppProps) {
 	const query = new QueryClient({
 		defaultOptions: {
 			queries: {
-				refetchOnWindowFocus: false,
+				// refetchOnWindowFocus: false,
 			},
 		},
 	});
