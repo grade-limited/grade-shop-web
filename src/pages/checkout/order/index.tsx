@@ -2,8 +2,12 @@ import Label from "@/components/Label";
 import ErrorSuffix from "@/components/antd/ErrorSuffix";
 import { message } from "@/components/antd/message";
 import Iconify from "@/components/iconify";
-import { findUnitPrice } from "@/pages/product/[id]";
-import { useGetCarts } from "@/queries/cart";
+import {
+	AccountEntry,
+	findUnitPrice,
+	getLowestQuantities,
+} from "@/pages/product/[id]";
+import { useDeleteCart, useGetCarts, useUpdateCart } from "@/queries/cart";
 import { useCreateOrder } from "@/queries/checkout";
 import { previewImage } from "@/service";
 import handleResponse from "@/utilities/handleResponse";
@@ -11,6 +15,7 @@ import { joiResolver } from "@hookform/resolvers/joi";
 import {
 	Avatar,
 	Button,
+	IconButton,
 	List,
 	ListItem,
 	ListItemAvatar,
@@ -25,8 +30,6 @@ import React from "react";
 import { Controller, useForm } from "react-hook-form";
 
 const Order: React.FC = () => {
-	const { data: orderData, isLoading } = useGetCarts();
-
 	const loginResolver = Joi.object({
 		recipient_name: Joi.string().required().label("Recipient Name").trim(),
 		recipient_number: Joi.string()
@@ -48,6 +51,8 @@ const Order: React.FC = () => {
 			.trim(),
 		recipient_address: Joi.string().label("Recipient Addess").trim(),
 	});
+
+	const { data: orderData, isLoading } = useGetCarts();
 
 	const { handleSubmit, control, reset } = useForm({
 		resolver: joiResolver(loginResolver),
@@ -94,6 +99,48 @@ const Order: React.FC = () => {
 			message.error(res.message);
 		}
 	};
+
+	//Update Function
+	const { mutateAsync: update, isLoading: isCartUpdating } = useUpdateCart();
+	const onUpdate = async (id: number, data: any) => {
+		message.open({
+			type: "loading",
+			content: "Updating Cart..",
+			duration: 0,
+		});
+		const res = await handleResponse(() =>
+			update({
+				id,
+				data,
+			})
+		);
+		message.destroy();
+		if (res.status) {
+			message.success(res.message);
+		} else {
+			message.error(res.message);
+		}
+	};
+
+	//Delete Cart Section
+	const { mutateAsync: Delete, isLoading: isDeleteLoading } = useDeleteCart();
+
+	const onDelete = async (id: number) => {
+		message.open({
+			type: "loading",
+			content: "Deleting product from order..",
+			duration: 0,
+		});
+		const res = await handleResponse(() => Delete(id));
+		message.destroy();
+		if (res.status) {
+			message.success("Product removed successfully");
+			return true;
+		} else {
+			message.error(res.message);
+			return false;
+		}
+	};
 	return (
 		<div className="m-6 flex flex-col">
 			<p className="font-medium text-2xl my-2">Shopping Cart</p>
@@ -122,7 +169,7 @@ const Order: React.FC = () => {
 						orderData?.map?.((item: any, index: number) => (
 							<ListItem
 								key={item.id}
-								className="grid grid-cols-7 items-start"
+								className="grid grid-cols-7 items-center lg:items-start"
 							>
 								<div className="flex flex-row col-span-4">
 									<ListItemAvatar>
@@ -138,9 +185,26 @@ const Order: React.FC = () => {
 										className="ml-4"
 										primary={
 											<>
-												<Link href={`/product/${item?.product?.id}`}>
-													{item.product.name}
-												</Link>
+												<div className="flex flex-row items-start lg:items-start lg:gap-1">
+													<Link href={`/product/${item?.product?.id}`}>
+														{item.product.name}
+													</Link>
+													{!!isCartUpdating || isDeleteLoading ? (
+														""
+													) : (
+														<>
+															<span className="flex flex-row items-center gap-1">
+																&bull;{" "}
+																<span
+																	className="text-primary underline cursor-pointer text-xs"
+																	onClick={() => onDelete(item.id)}
+																>
+																	Delete
+																</span>
+															</span>
+														</>
+													)}
+												</div>
 											</>
 										}
 										primaryTypographyProps={{
@@ -199,7 +263,38 @@ const Order: React.FC = () => {
 								/>
 								<ListItemText
 									className="col-span-1"
-									primary={item?.quantity}
+									primary={
+										<>
+											<div className="flex flex-col lg:flex-row justify-center ">
+												<IconButton
+													size="small"
+													onClick={() =>
+														onUpdate(item?.id, { quantity: item.quantity - 1 })
+													}
+													disabled={
+														isCartUpdating ||
+														(item?.product?.minimum_order_quantity &&
+															getLowestQuantities(
+																item?.product
+																	?.minimum_order_quantity as AccountEntry[]
+															)?.["bb2e"] >= item?.quantity)
+													}
+												>
+													<Iconify icon={"mdi:minus"} />
+												</IconButton>
+												{item?.quantity}
+												<IconButton
+													size="small"
+													onClick={() =>
+														onUpdate(item?.id, { quantity: item.quantity + 1 })
+													}
+													disabled={isCartUpdating}
+												>
+													<Iconify icon={"mdi:plus"} />
+												</IconButton>
+											</div>
+										</>
+									}
 									primaryTypographyProps={{
 										className: "font-semibold text-lg text-center",
 									}}

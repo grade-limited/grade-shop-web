@@ -2,9 +2,17 @@ import Label from "@/components/Label";
 import ErrorSuffix from "@/components/antd/ErrorSuffix";
 import { message } from "@/components/antd/message";
 import Iconify from "@/components/iconify";
-import { findUnitPrice } from "@/pages/product/[id]";
+import {
+	AccountEntry,
+	findUnitPrice,
+	getLowestQuantities,
+} from "@/pages/product/[id]";
 // import { useDeleteCart, useGetCarts } from "@/queries/cart";
-import { useGetQuoteCarts } from "@/queries/cart/quote";
+import {
+	useDeleteQuoteCart,
+	useGetQuoteCarts,
+	useUpdateQuoteCart,
+} from "@/queries/cart/quote";
 import { useCreateQuotation } from "@/queries/checkout";
 import { previewImage } from "@/service";
 import handleResponse from "@/utilities/handleResponse";
@@ -12,6 +20,7 @@ import { joiResolver } from "@hookform/resolvers/joi";
 import {
 	Avatar,
 	Button,
+	IconButton,
 	List,
 	ListItem,
 	ListItemAvatar,
@@ -93,6 +102,51 @@ const Order: React.FC = () => {
 		}
 	};
 
+	//delete function
+	const { mutateAsync: DeleteQoute, isLoading: isDeleteLoading } =
+		useDeleteQuoteCart();
+
+	const onDelete = async (id: number) => {
+		message.open({
+			type: "loading",
+			content: "Deleting Product from Quotation..",
+			duration: 0,
+		});
+		const res = await handleResponse(() => DeleteQoute(id));
+
+		message.destroy();
+
+		if (res.status) {
+			message.success("Product removed");
+			return true;
+		} else {
+			message.error(res.message);
+			return false;
+		}
+	};
+
+	//update function
+	const { mutateAsync: update, isLoading: isQuoteCartUpdating } =
+		useUpdateQuoteCart();
+	const onUpdate = async (id: number, data: any) => {
+		message.open({
+			type: "loading",
+			content: "Updating Quotation..",
+			duration: 0,
+		});
+		const res = await handleResponse(() =>
+			update({
+				id,
+				data,
+			})
+		);
+		message.destroy();
+		if (res.status) {
+			message.success("Quotation updated successfully");
+		} else {
+			message.error(res.message);
+		}
+	};
 	return (
 		<div className="m-6 flex flex-col">
 			<p className="font-medium text-2xl my-2">Shopping Cart</p>
@@ -121,7 +175,7 @@ const Order: React.FC = () => {
 						quotationData?.map?.((item: any, index: number) => (
 							<ListItem
 								key={item.id}
-								className="grid grid-cols-7 items-start"
+								className="grid grid-cols-7 items-center lg:items-start"
 							>
 								<div className="flex flex-row col-span-4 items-center">
 									<ListItemAvatar>
@@ -137,9 +191,26 @@ const Order: React.FC = () => {
 										className="ml-4"
 										primary={
 											<>
-												<Link href={`/product/${item.product.id}`}>
-													{item.product.name}
-												</Link>
+												<div className="flex flex-row items-start lg:items-start lg:gap-1">
+													<Link href={`/product/${item.product.id}`}>
+														{item.product.name}
+													</Link>
+													{!!isQuoteCartUpdating || isDeleteLoading ? (
+														""
+													) : (
+														<>
+															<span className="flex flex-row items-center gap-1">
+																&bull;{" "}
+																<span
+																	className="text-primary underline cursor-pointer text-xs"
+																	onClick={() => onDelete(item.id)}
+																>
+																	Delete
+																</span>
+															</span>
+														</>
+													)}
+												</div>
 											</>
 										}
 										primaryTypographyProps={{
@@ -208,7 +279,38 @@ const Order: React.FC = () => {
 								/>
 								<ListItemText
 									className="col-span-1"
-									primary={item?.quantity}
+									primary={
+										<>
+											<div className="flex flex-col lg:flex-row justify-center ">
+												<IconButton
+													size="small"
+													onClick={() =>
+														onUpdate(item?.id, { quantity: item.quantity - 1 })
+													}
+													disabled={
+														isQuoteCartUpdating ||
+														(item?.product?.minimum_order_quantity &&
+															getLowestQuantities(
+																item?.product
+																	?.minimum_order_quantity as AccountEntry[]
+															)?.["b2b"] >= item?.quantity)
+													}
+												>
+													<Iconify icon={"mdi:minus"} />
+												</IconButton>
+												{item?.quantity}
+												<IconButton
+													size="small"
+													onClick={() =>
+														onUpdate(item?.id, { quantity: item.quantity + 1 })
+													}
+													disabled={isQuoteCartUpdating}
+												>
+													<Iconify icon={"mdi:plus"} />
+												</IconButton>
+											</div>
+										</>
+									}
 									primaryTypographyProps={{
 										className: "font-semibold text-lg text-center",
 									}}
