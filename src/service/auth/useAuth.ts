@@ -36,6 +36,7 @@ export const useAuth = () => {
 
 		setTimeout(() => {
 			authService.removeToken();
+			message.destroy();
 			message.success("Logged out! Please sign in again");
 		}, 1000);
 		// eslint-disable-next-line react-hooks/exhaustive-deps
