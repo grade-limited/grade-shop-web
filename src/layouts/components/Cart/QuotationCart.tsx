@@ -25,7 +25,9 @@ import {
 import { message } from "@/components/antd/message";
 import handleResponse from "@/utilities/handleResponse";
 import Link from "next/link";
-const QuotationCart: React.FC = () => {
+const QuotationCart: React.FC<{ toggleState: () => void }> = ({
+  toggleState,
+}) => {
   const { data, isLoading } = useGetQuoteCarts();
 
   //delete function
@@ -181,6 +183,7 @@ const QuotationCart: React.FC = () => {
             startIcon={
               <Iconify icon={"material-symbols:shopping-cart-checkout"} />
             }
+            onClick={toggleState}
           >
             Proceed to Checkout
           </Button>

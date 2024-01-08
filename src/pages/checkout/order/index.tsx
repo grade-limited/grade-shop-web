@@ -69,6 +69,7 @@ const order: React.FC = () => {
           product_list: Array.from(orderData || [], (item: any) => ({
             product_id: item?.product?.id,
             quantity: item?.quantity,
+            cart_id: item?.id,
             unit_price: findUnitPrice(
               "bb2e",
               item.quantity,
@@ -87,44 +88,20 @@ const order: React.FC = () => {
     message.destroy();
     if (res.status) {
       reset();
-      // onDelete(orderData?.id); got some problems
       message.success(res.message);
     } else {
       message.error(res.message);
     }
   };
-
-  //Cart Delete Section
-
-  // const { mutateAsync: Delete, isLoading: isDeleteLoading } = useDeleteCart();
-
-  // const onDelete = async (id: number) => {
-  //   message.open({
-  //     type: "loading",
-  //     content: "Deleting Product from Cart..",
-  //     duration: 0,
-  //   });
-  //   const res = await handleResponse(() => Delete(id));
-
-  //   message.destroy();
-
-  //   if (res.status) {
-  //     message.success(res.message);
-  //     return true;
-  //   } else {
-  //     message.error(res.message);
-  //     return false;
-  //   }
-  // };
   return (
     <div className="m-6 flex flex-col">
       <p className="font-medium text-2xl my-2">Shopping Cart</p>
       <p className="font-medium my-2">
         Products{" "}
         {isLoading ? (
-          ""
+          "(0)"
         ) : (
-          <>({!!orderData?.length && <>{orderData?.length}</>})</>
+          <>({!!orderData?.length && <>{orderData?.length || 0}</>})</>
         )}
       </p>
       <div className="grid grid-cols-7 px-4">
@@ -152,7 +129,13 @@ const order: React.FC = () => {
                   </ListItemAvatar>
                   <ListItemText
                     className="ml-4"
-                    primary={item.product.name}
+                    primary={
+                      <>
+                        <Link href={`/product/${item?.product?.id}`}>
+                          {item.product.name}
+                        </Link>
+                      </>
+                    }
                     primaryTypographyProps={{
                       className: "font-semibold text-lg mb-1",
                     }}
@@ -161,9 +144,17 @@ const order: React.FC = () => {
                         <span className="flex flex-col gap-1">
                           <span className="font-semibold">
                             Brand :{" "}
-                            {item?.product?.brand
-                              ? item?.product?.brand?.name
-                              : "-"}{" "}
+                            {item?.product?.brand ? (
+                              <>
+                                <Link
+                                  href={`/brand/${item?.product?.brand?.id}`}
+                                >
+                                  {item?.product?.brand?.name}
+                                </Link>
+                              </>
+                            ) : (
+                              "-"
+                            )}{" "}
                           </span>
                           <span className="font-semibold">
                             Size :{" "}

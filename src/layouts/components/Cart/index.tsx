@@ -90,7 +90,7 @@ const Cart: React.FC = () => {
             {
               key: "b2b",
               label: "Company",
-              children: <QuotationCart />,
+              children: <QuotationCart toggleState={toggleState} />,
             },
           ]}
         />

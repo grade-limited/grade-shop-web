@@ -12,7 +12,10 @@ const createOrder = (data: ICreateOrder) => {
 export const useCreateOrder = () => {
   const queryClient = useQueryClient();
   return useMutation(createOrder, {
-    onSuccess: () => queryClient.invalidateQueries(["/orders"]),
+    onSuccess: () => {
+      queryClient.invalidateQueries(["carts"]);
+      console.log("helloooo");
+    },
   });
 };
 
@@ -24,6 +27,6 @@ const createQuotation = (data: ICreateQuotation) => {
 export const useCreateQuotation = () => {
   const queryClient = useQueryClient();
   return useMutation(createQuotation, {
-    onSuccess: () => queryClient.invalidateQueries(["/quotations"]),
+    onSuccess: () => queryClient.invalidateQueries(["carts"]),
   });
 };
