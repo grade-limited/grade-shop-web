@@ -35,7 +35,7 @@ const Cart: React.FC = () => {
         />
         <div className="text-white">
           <p className="text-center text-slate-400 text-sm">
-            Cart ({!!data?.length && data?.length})
+            Cart ({(!!data?.length && data?.length) || 0})
           </p>
           <p className="font-semibold">
             {!!data?.length
@@ -67,9 +67,9 @@ const Cart: React.FC = () => {
           <p>
             Cart
             {cartType === "bb2e" ? (
-              <>({!!data?.length && <>{data?.length}</>})</>
+              <>({!!data?.length && <>{data?.length || 0}</>})</>
             ) : (
-              <>({!!quoteData?.length && <>{quoteData?.length}</>})</>
+              <>({!!quoteData?.length && <>{quoteData?.length || 0}</>})</>
             )}
           </p>
           <IconButton onClick={toggleState}>

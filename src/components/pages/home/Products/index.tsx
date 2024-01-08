@@ -1,13 +1,44 @@
 import Iconify from "@/components/iconify";
 import { previewImage } from "@/service";
 import { Avatar, Button, Typography } from "@mui/material";
-import { Badge, Empty, Tag } from "antd";
+import { Badge, Empty } from "antd";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
-import { findUnitPrice } from "../../../../pages/product/[id]/index";
+import {
+  // AccountEntry,
+  findUnitPrice,
+  // getLowestQuantities,
+} from "../../../../pages/product/[id]/index";
+// import { useAddToCart } from "@/queries/cart";
+// import { message } from "@/components/antd/message";
+// import handleResponse from "@/utilities/handleResponse";
 
 const Products: React.FC<{ products: any[] }> = ({ products }) => {
+  // const { mutateAsync: addToCart, isLoading: isCartUpdating } = useAddToCart();
+
+  // const onSubmit = async (product_id: number, quantity: number) => {
+  //   message.open({
+  //     type: "loading",
+  //     content: "Adding products to cart..",
+  //     duration: 0,
+  //   });
+
+  //   const res = await handleResponse(
+  //     () =>
+  //       addToCart({
+  //         product_id,
+  //         quantity,
+  //       }),
+  //     201
+  //   );
+  //   message.destroy();
+  //   if (res.status) {
+  //     message.success(res.message);
+  //   } else {
+  //     message.error(res.message);
+  //   }
+  // };
   return products?.length === 0 ? (
     <div>
       <Empty
@@ -107,6 +138,7 @@ const Products: React.FC<{ products: any[] }> = ({ products }) => {
               fullWidth
               className="mt-2 rounded-md bg-slate-700 hover:bg-slate-600"
               startIcon={<Iconify icon={"fa-solid:cart-plus"} />}
+              // onClick={() => onSubmit(products?.id, products?.brand_id)}
             >
               Add to Cart
             </Button>
