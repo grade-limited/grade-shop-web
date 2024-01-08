@@ -23,8 +23,10 @@ import Link from "next/link";
 import React from "react";
 
 const OrderCart: React.FC<{ toggleState: () => void }> = ({ toggleState }) => {
+  //Fetch Data
   const { data, isLoading } = useGetCarts();
 
+  //Delete Cart Section
   const { mutateAsync: Delete, isLoading: isDeleteLoading } = useDeleteCart();
 
   const onDelete = async (id: number) => {
@@ -45,7 +47,7 @@ const OrderCart: React.FC<{ toggleState: () => void }> = ({ toggleState }) => {
     }
   };
 
-  //update function
+  //Update Function
   const { mutateAsync: update, isLoading: isCartUpdating } = useUpdateCart();
   const onSubmit = async (id: number, data: any) => {
     message.open({

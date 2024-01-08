@@ -6,7 +6,6 @@ import {
   List,
   ListItem,
   ListItemAvatar,
-  ListItemButton,
   ListItemSecondaryAction,
   ListItemText,
 } from "@mui/material";
@@ -25,6 +24,7 @@ import {
 } from "@/pages/product/[id]";
 import { message } from "@/components/antd/message";
 import handleResponse from "@/utilities/handleResponse";
+import Link from "next/link";
 const QuotationCart: React.FC = () => {
   const { data, isLoading } = useGetQuoteCarts();
 
@@ -52,7 +52,7 @@ const QuotationCart: React.FC = () => {
   };
 
   //update function
-  const { mutateAsync: update, isLoading: isCartUpdating } =
+  const { mutateAsync: update, isLoading: isQuoteCartUpdating } =
     useUpdateQuoteCart();
   const onSubmit = async (id: number, data: any) => {
     message.open({
@@ -94,7 +94,7 @@ const QuotationCart: React.FC = () => {
                 primary={
                   <>
                     {item.product.name}{" "}
-                    {!!isCartUpdating || isDeleteLoading ? (
+                    {!!isQuoteCartUpdating || isDeleteLoading ? (
                       ""
                     ) : (
                       <>
@@ -125,7 +125,7 @@ const QuotationCart: React.FC = () => {
                     onSubmit(item?.id, { quantity: item.quantity - 1 })
                   }
                   disabled={
-                    isCartUpdating ||
+                    isQuoteCartUpdating ||
                     (item?.product?.minimum_order_quantity &&
                       getLowestQuantities(
                         item?.product?.minimum_order_quantity as AccountEntry[]
@@ -139,7 +139,7 @@ const QuotationCart: React.FC = () => {
                   onClick={() =>
                     onSubmit(item?.id, { quantity: item.quantity + 1 })
                   }
-                  disabled={isCartUpdating}
+                  disabled={isQuoteCartUpdating}
                 >
                   <Iconify icon={"mdi:plus"} />
                 </IconButton>
@@ -171,19 +171,20 @@ const QuotationCart: React.FC = () => {
             ৳
           </p>
         </div>
-        <Button
-          variant="contained"
-          color="primary"
-          size="large"
-          disabled={isCartUpdating}
-          className="mt-1 rounded-md w-full bg-slate-700 hover:bg-slate-600"
-          startIcon={
-            <Iconify icon={"material-symbols:shopping-cart-checkout"} />
-          }
-          // onClick={onSubmit}
-        >
-          Proceed to Checkout
-        </Button>
+        <Link href={"/checkout/quotation"}>
+          <Button
+            variant="contained"
+            color="primary"
+            size="large"
+            disabled={isQuoteCartUpdating}
+            className="mt-1 rounded-md w-full bg-slate-700 hover:bg-slate-600"
+            startIcon={
+              <Iconify icon={"material-symbols:shopping-cart-checkout"} />
+            }
+          >
+            Proceed to Checkout
+          </Button>
+        </Link>
       </div>
     </div>
   );
