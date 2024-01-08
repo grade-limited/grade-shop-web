@@ -15,6 +15,7 @@ import { useAddToCart } from "@/queries/cart";
 import { message } from "@/components/antd/message";
 import handleResponse from "@/utilities/handleResponse";
 import { useAddToQuoteCart } from "@/queries/cart/quote";
+import useCart from "@/hooks/useCart";
 
 export type AccountEntry = { account_type: string; quantity: string };
 
@@ -173,6 +174,22 @@ const Product: React.FC<{ data: any }> = ({ data }) => {
 		}
 	};
 
+	const {
+		findProduct,
+		onUpdate,
+		isCartUpdating: isUpdating,
+		onDelete,
+		isDeleting,
+	} = useCart();
+
+	const cartData = findProduct(parseInt(id as string));
+
+	React.useEffect(() => {
+		if (!cartData) return;
+		setQt(cartData?.quantity || 1);
+		// setCqt(cartData?.quantity || 1);
+	}, [cartData]);
+
 	return (
 		<>
 			<Head>
@@ -322,34 +339,52 @@ const Product: React.FC<{ data: any }> = ({ data }) => {
 											)}
 											<div className="bg-slate-600 p-2 w-fit my-3 rounded-full flex flex-row items-center justify-between gap-3">
 												<IconButton
-													//   color="primary"
 													className="bg-slate-300"
 													onClick={() =>
-														qt > (minqt?.bb2e || 1) ? setQt(qt - 1) : null
+														qt > (minqt?.bb2e || 1)
+															? !cartData
+																? setQt(qt - 1)
+																: onUpdate(cartData?.id, { quantity: qt - 1 })
+															: !!cartData && onDelete(cartData?.id)
 													}
+													disabled={!!cartData && (isUpdating || isDeleting)}
 												>
-													<Iconify icon={"mdi:minus"} />
+													<Iconify
+														icon={
+															!cartData
+																? "mdi:minus"
+																: qt > (minqt?.bb2e || 1)
+																? "mdi:minus"
+																: "fluent:delete-12-filled"
+														}
+													/>
 												</IconButton>
 												<span className="text-white text-2xl">{qt}</span>
 												<IconButton
-													//   color="primary"
 													className="bg-slate-300"
-													onClick={() => setQt(qt + 1)}
+													onClick={() =>
+														!cartData
+															? setQt(qt + 1)
+															: onUpdate(cartData?.id, { quantity: qt + 1 })
+													}
+													disabled={!!cartData && (isUpdating || isDeleting)}
 												>
 													<Iconify icon={"mdi:plus"} />
 												</IconButton>
 											</div>
-											<Button
-												variant="contained"
-												color="primary"
-												size="large"
-												disabled={isCartUpdating}
-												className="mt-1 rounded-md bg-slate-700 hover:bg-slate-600"
-												startIcon={<Iconify icon={"fa-solid:cart-plus"} />}
-												onClick={onSubmit}
-											>
-												Add to Cart
-											</Button>
+											{!cartData && (
+												<Button
+													variant="contained"
+													color="primary"
+													size="large"
+													disabled={isCartUpdating}
+													className="mt-1 rounded-md bg-slate-700 hover:bg-slate-600"
+													startIcon={<Iconify icon={"fa-solid:cart-plus"} />}
+													onClick={onSubmit}
+												>
+													Add to Cart
+												</Button>
+											)}
 										</>
 									),
 								},
