@@ -1,33 +1,33 @@
-import React, { useEffect } from "react";
+import React from "react";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import { Container } from "@mui/material";
 
 // import PushNotificationLayout from "@/components/PushNoti";
 
-import useUser from "@/hooks/useUser";
-import { useRegisterDevice } from "./../queries/auth/index";
-import { onMessageListener, requestToken } from "@/config/fcm";
-import { IUserId } from "@/types";
-import { notification } from "antd";
+// import useUser from "@/hooks/useUser";
+// import { useRegisterDevice } from "./../queries/auth/index";
+// import { onMessageListener, requestToken } from "@/config/fcm";
+// import { IUserId } from "@/types";
+// import { notification } from "antd";
 import Sidebar from "./components/Sidebar";
 import { Cart } from "./components";
 
 const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-	const { mutateAsync: registerNotification } = useRegisterDevice();
-	const user = useUser();
+	// const { mutateAsync: registerNotification } = useRegisterDevice();
+	// const user = useUser();
 
-	const registerDeviceForNotification = async (userId: IUserId) => {
-		try {
-			if (!!userId)
-				registerNotification({
-					userId,
-					deviceId: await requestToken(),
-				});
-		} catch {
-			return;
-		}
-	};
+	// const registerDeviceForNotification = async (userId: IUserId) => {
+	// 	try {
+	// 		if (!!userId)
+	// 			registerNotification({
+	// 				userId,
+	// 				deviceId: await requestToken(),
+	// 			});
+	// 	} catch {
+	// 		return;
+	// 	}
+	// };
 
 	// useEffect(() => {
 	// 	try {

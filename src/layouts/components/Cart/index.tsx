@@ -13,8 +13,8 @@ import { useGetQuoteCarts } from "@/queries/cart/quote";
 
 const Cart: React.FC = () => {
 	//Fetch Data Section
-	const { data, isLoading } = useGetCarts(); //Cart Data Fetched
-	const { data: quoteData, isLoading: isQuoteLoading } = useGetQuoteCarts(); //Quotation Data Fetched
+	const { data } = useGetCarts(); //Cart Data Fetched
+	const { data: quoteData } = useGetQuoteCarts(); //Quotation Data Fetched
 	const { isAuthenticated, isValidationLoading } = useAuth(); //Authentication Data Fetched
 
 	//States for data management
@@ -35,7 +35,7 @@ const Cart: React.FC = () => {
 				/>
 				<div className="text-white">
 					<p className="text-center text-slate-400 text-sm">
-						Cart ({!!data?.length && data?.length})
+						Cart {!!data?.length && `(${data?.length})`}
 					</p>
 					<p className="font-semibold">
 						{!!data?.length
@@ -85,20 +85,12 @@ const Cart: React.FC = () => {
 						{
 							key: "bb2e",
 							label: "Personal",
-							children: !isLoading ? (
-								<OrderCart toggleState={toggleState} />
-							) : (
-								<Skeleton />
-							),
+							children: <OrderCart toggleState={toggleState} />,
 						},
 						{
 							key: "b2b",
 							label: "Company",
-							children: !isQuoteLoading ? (
-								<QuotationCart toggleState={toggleState} />
-							) : (
-								<Skeleton />
-							),
+							children: <QuotationCart toggleState={toggleState} />,
 						},
 					]}
 				/>

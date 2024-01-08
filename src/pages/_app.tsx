@@ -15,13 +15,8 @@ import { appWithTranslation, useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
 function App({ Component, pageProps }: AppProps) {
-	const query = new QueryClient({
-		defaultOptions: {
-			queries: {
-				// refetchOnWindowFocus: false,
-			},
-		},
-	});
+	// ✅ this is stable
+	const [query] = React.useState(() => new QueryClient());
 
 	const { t } = useTranslation("common");
 
