@@ -131,7 +131,7 @@ const Products: React.FC<{ products: any[] }> = ({ products }) => {
                 )}
               </div>
             </div>
-            <Button
+            {/* <Button
               variant="contained"
               color="primary"
               size="large"
@@ -141,7 +141,7 @@ const Products: React.FC<{ products: any[] }> = ({ products }) => {
               // onClick={() => onSubmit(products?.id, products?.brand_id)}
             >
               Add to Cart
-            </Button>
+            </Button> */}
           </div>
         );
       })}
